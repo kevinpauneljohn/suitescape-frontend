@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import slides from '../../data/onboardingData';
 import {
   FlatList,
@@ -15,6 +15,8 @@ import style from './SliderStyles';
 import BackButton from '../BackButton/BackButton';
 import SignInButton from '../SignInButton/SignInButton';
 import SkipButton from '../SkipButton/SkipButton';
+import Logo from '../Logo/Logo';
+import SignInHint from '../SignInHint/SignInHint';
 
 const Slider = ({navigation}) => {
   const [index, setIndex] = useState(0);
@@ -28,43 +30,8 @@ const Slider = ({navigation}) => {
   const {width} = useWindowDimensions();
 
   useEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      headerTitle: '',
-      headerBackground: () => null,
-    });
-  }, [navigation]);
-
-  const renderHeaderRight = useCallback(() => {
-    console.log('Render header right');
-    if (index === 0) {
-      return <SkipButton onPress={() => navigation.replace(Routes.Home)} />;
-    }
-    if (endReached && lowerDPI) {
-      return <SignInButton />;
-    }
-    return null;
-  }, [endReached, index, lowerDPI, navigation]);
-
-  const renderHeaderLeft = useCallback(() => {
-    console.log('Render header left');
-    if (index > 0) {
-      return (
-        <BackButton onPress={() => setIndex(prevIndex => prevIndex - 1)} />
-      );
-    }
-    return null;
-  }, [index]);
-
-  useEffect(() => {
-    console.log('Render header');
-    navigation.setOptions({
-      headerRight: renderHeaderRight,
-      headerLeft: renderHeaderLeft,
-    });
-
     flatListRef.current.scrollToIndex({index, animated: true});
-  }, [index, navigation, renderHeaderLeft, renderHeaderRight]);
+  }, [index]);
 
   const handleNextButtonClick = () => {
     if (endReached) {
@@ -76,6 +43,20 @@ const Slider = ({navigation}) => {
 
   return (
     <View>
+      <View style={style.header}>
+        <View style={style.headerLeft}>
+          {index > 0 && (
+            <BackButton onPress={() => setIndex(prevIndex => prevIndex - 1)} />
+          )}
+        </View>
+        <View style={style.headerRight}>
+          {endReached && lowerDPI && <SignInButton />}
+          {index === 0 && (
+            <SkipButton onPress={() => navigation.replace(Routes.Home)} />
+          )}
+        </View>
+      </View>
+      <Logo />
       <FlatList
         ref={flatListRef}
         initialScrollIndex={index}
@@ -92,20 +73,9 @@ const Slider = ({navigation}) => {
       />
       <Dots index={index} />
       <Button onPress={() => handleNextButtonClick()}>
-        <Text style={style.nextButtonText}>
-          {endReached ? 'Get Started' : 'Next'}
-        </Text>
+        {endReached ? 'Get Started' : 'Next'}
       </Button>
-      {endReached && higherDPI && (
-        <View style={style.signInContainer}>
-          <Text style={{...style.signInContentText}}>
-            Already have an account?
-          </Text>
-          <Text style={{...style.signInContentText, ...style.link}}>
-            Sign in
-          </Text>
-        </View>
-      )}
+      {endReached && higherDPI && <SignInHint />}
     </View>
   );
 };
