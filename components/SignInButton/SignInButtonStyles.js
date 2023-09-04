@@ -3,8 +3,7 @@ import {Colors} from '../../assets/Colors';
 
 const style = StyleSheet.create({
   signInButton: {
-    marginHorizontal: 30,
-    marginTop: 25,
+    padding: 5,
   },
   signInButtonText: {
     color: Colors.blue,

@@ -1,24 +1,18 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../assets/Colors';
 
 const style = StyleSheet.create({
-  nextButtonText: {
-    color: 'white',
-    fontFamily: 'Inter-Medium',
-    fontSize: 20,
-  },
-  signInContainer: {
+  header: {
+    height: 50,
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 20,
+    justifyContent: 'space-between',
   },
-  signInContentText: {
-    fontFamily: 'Roboto',
-    fontSize: 14,
-    paddingRight: 2,
+  headerLeft: {
+    marginTop: 10,
+    marginLeft: 15,
   },
-  link: {
-    color: Colors.blue,
+  headerRight: {
+    marginRight: 27,
+    marginTop: 20,
   },
 });
 
