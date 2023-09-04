@@ -1,12 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import slides from '../../data/onboardingData';
-import {
-  FlatList,
-  PixelRatio,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {FlatList, PixelRatio, useWindowDimensions, View} from 'react-native';
 import {Routes} from '../../navigation/Routes';
 import Dots from '../Dots/Dots';
 import Button from '../Button/Button';
