@@ -10,6 +10,11 @@ const style = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.blue,
   },
+  buttonText: {
+    color: 'white',
+    fontFamily: 'Inter-Medium',
+    fontSize: 20,
+  },
 });
 
 export default style;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import {Pressable, Text} from 'react-native';
 import style from './ButtonStyles';
 
 const Button = ({children, onPress}) => (
@@ -9,7 +9,7 @@ const Button = ({children, onPress}) => (
       ...style.button,
       ...(pressed && {opacity: 0.7}),
     })}>
-    {children}
+    <Text style={style.buttonText}>{children}</Text>
   </Pressable>
 );
 
