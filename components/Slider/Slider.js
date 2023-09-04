@@ -29,7 +29,7 @@ const Slider = ({navigation}) => {
 
   const handleNextButtonClick = () => {
     if (endReached) {
-      navigation.replace(Routes.Home);
+      navigation.replace(Routes.SignUp);
       return;
     }
     setIndex(prevIndex => prevIndex + 1);
@@ -46,7 +46,7 @@ const Slider = ({navigation}) => {
         <View style={style.headerRight}>
           {endReached && lowerDPI && <SignInButton />}
           {index === 0 && (
-            <SkipButton onPress={() => navigation.replace(Routes.Home)} />
+            <SkipButton onPress={() => navigation.replace(Routes.SignUp)} />
           )}
         </View>
       </View>
@@ -69,7 +69,7 @@ const Slider = ({navigation}) => {
       <Button onPress={() => handleNextButtonClick()}>
         {endReached ? 'Get Started' : 'Next'}
       </Button>
-      {endReached && higherDPI && <SignInHint />}
+      {endReached && higherDPI && <SignInHint navigation={navigation} />}
     </View>
   );
 };
