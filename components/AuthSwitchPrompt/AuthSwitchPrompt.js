@@ -8,6 +8,12 @@ import style from './AuthSwitchPromptStyles';
 const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
   const navigation = useNavigation();
 
+  const nextScreen = () => {
+    onboarding
+      ? navigation.replace(register ? Routes.SignUp : Routes.Login)
+      : navigation.navigate(register ? Routes.SignUp : Routes.Login);
+  };
+
   return (
     <View style={style.container}>
       <Text
@@ -17,14 +23,7 @@ const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
         }}>
         {register ? "Don't have an account?" : 'Already have an account?'}
       </Text>
-      <Link
-        onPress={() => {
-          onboarding
-            ? navigation.replace(register ? Routes.SignUp : Routes.Login)
-            : navigation.navigate(register ? Routes.SignUp : Routes.Login);
-        }}>
-        {register ? 'Sign Up' : 'Sign In'}
-      </Link>
+      <Link onPress={nextScreen}>{register ? 'Sign Up' : 'Sign In'}</Link>
     </View>
   );
 };
