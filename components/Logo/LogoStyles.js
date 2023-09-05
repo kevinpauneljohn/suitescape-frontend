@@ -4,11 +4,12 @@ const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingTop: 40,
+    paddingTop: 30,
     paddingBottom: 10,
   },
   logoText: {
     fontFamily: 'Poppins',
+    color: 'black',
     letterSpacing: 0.15,
     fontSize: 40,
     textTransform: 'uppercase',
@@ -17,7 +18,7 @@ const style = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   fixText: {
-    paddingTop: Platform.OS === 'android' ? 5 : 0,
+    paddingTop: Platform.OS === 'android' ? 3 : 0,
   },
 });
 

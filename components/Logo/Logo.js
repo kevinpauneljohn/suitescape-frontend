@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Text, View} from 'react-native';
 import style from './LogoStyles';
 
@@ -9,4 +9,4 @@ const Logo = () => (
   </View>
 );
 
-export default Logo;
+export default memo(Logo);

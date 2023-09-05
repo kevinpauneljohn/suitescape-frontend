@@ -2,26 +2,29 @@ import React, {useEffect, useRef, useState} from 'react';
 import slides from '../../data/onboardingData';
 import {FlatList, PixelRatio, useWindowDimensions, View} from 'react-native';
 import {Routes} from '../../navigation/Routes';
+import {useNavigation} from '@react-navigation/native';
 import style from './SliderStyles';
 import Logo from '../Logo/Logo';
-import Dots from '../Dots/Dots';
 import Button from '../Button/Button';
 import SliderItem from '../SliderItem/SliderItem';
 import BackButton from '../BackButton/BackButton';
-import SignInButton from '../SignInButton/SignInButton';
 import SkipButton from '../SkipButton/SkipButton';
-import SignInHint from '../SignInHint/SignInHint';
+import Link from '../Link/Link';
+import AuthSwitchPrompt from '../AuthSwitchPrompt/AuthSwitchPrompt';
+import {Colors} from '../../assets/Colors';
 
-const Slider = ({navigation}) => {
+const Slider = () => {
+  const navigation = useNavigation();
+
   const [index, setIndex] = useState(0);
   const flatListRef = useRef(null);
   const endReached = index === slides.length - 1;
 
+  const {width} = useWindowDimensions();
+
   const pixelRatio = PixelRatio.get();
   const higherDPI = pixelRatio > 2;
   const lowerDPI = pixelRatio <= 2;
-
-  const {width} = useWindowDimensions();
 
   useEffect(() => {
     flatListRef.current.scrollToIndex({index, animated: true});
@@ -35,6 +38,16 @@ const Slider = ({navigation}) => {
     setIndex(prevIndex => prevIndex + 1);
   };
 
+  const renderDot = i => (
+    <View
+      key={i}
+      style={{
+        ...style.dot,
+        ...{backgroundColor: i === index ? Colors.blue : 'gray'},
+      }}
+    />
+  );
+
   return (
     <View>
       <View style={style.header}>
@@ -44,9 +57,15 @@ const Slider = ({navigation}) => {
           )}
         </View>
         <View style={style.headerRight}>
-          {endReached && lowerDPI && <SignInButton />}
           {index === 0 && (
             <SkipButton onPress={() => navigation.replace(Routes.SignUp)} />
+          )}
+          {endReached && lowerDPI && (
+            <View style={style.signInButtonContainer}>
+              <Link onPress={() => navigation.replace(Routes.Login)}>
+                Sign In
+              </Link>
+            </View>
           )}
         </View>
       </View>
@@ -65,11 +84,15 @@ const Slider = ({navigation}) => {
         decelerationRate={'fast'}
         x
       />
-      <Dots index={index} />
-      <Button onPress={() => handleNextButtonClick()}>
-        {endReached ? 'Get Started' : 'Next'}
-      </Button>
-      {endReached && higherDPI && <SignInHint navigation={navigation} />}
+      <View style={style.dotContainer}>
+        {slides.map((_, i) => renderDot(i))}
+      </View>
+      <View style={style.nextButtonContainer}>
+        <Button onPress={() => handleNextButtonClick()}>
+          {endReached ? 'Get Started' : 'Next'}
+        </Button>
+      </View>
+      {endReached && higherDPI && <AuthSwitchPrompt onboarding={true} />}
     </View>
   );
 };

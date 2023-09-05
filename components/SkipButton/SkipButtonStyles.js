@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Colors} from '../../assets/Colors';
 
 const style = StyleSheet.create({
@@ -15,7 +15,6 @@ const style = StyleSheet.create({
     color: Colors.blue,
     fontFamily: 'Roboto',
     fontSize: 15,
-    paddingTop: Platform.OS === 'android' ? 3 : 0,
   },
 });
 

@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
   header: {
-    height: 50,
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -11,8 +11,25 @@ const style = StyleSheet.create({
     marginLeft: 15,
   },
   headerRight: {
-    marginRight: 27,
-    marginTop: 20,
+    marginRight: 26,
+    marginTop: 23,
+  },
+  dot: {
+    width: 15,
+    height: 15,
+    margin: 5,
+    borderRadius: 10,
+  },
+  dotContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  nextButtonContainer: {
+    marginTop: 30,
+    marginHorizontal: 40,
+  },
+  signInButtonContainer: {
+    padding: 5,
   },
 });
 

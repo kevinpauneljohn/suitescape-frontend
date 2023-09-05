@@ -1,19 +1,17 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../assets/Colors';
 
 const style = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 20,
+    marginTop: 25,
+    marginBottom: 40,
   },
-  text: {
+  hintText: {
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 16,
     paddingRight: 4,
-  },
-  link: {
-    color: Colors.blue,
+    color: 'gray',
   },
 });
 

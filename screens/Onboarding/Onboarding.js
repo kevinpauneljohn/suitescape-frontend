@@ -1,11 +1,11 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
-import Slider from '../components/Slider/Slider';
+import Slider from '../../components/Slider/Slider';
 
-const Onboarding = ({navigation}) => {
+const Onboarding = () => {
   return (
     <SafeAreaView>
-      <Slider navigation={navigation} />
+      <Slider />
     </SafeAreaView>
   );
 };
