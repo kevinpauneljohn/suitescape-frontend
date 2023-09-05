@@ -1,17 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
-import slides from '../../data/onboardingData';
 import {FlatList, PixelRatio, useWindowDimensions, View} from 'react-native';
+import slides from '../../data/onboardingData';
 import {Routes} from '../../navigation/Routes';
 import {useNavigation} from '@react-navigation/native';
 import style from './SliderStyles';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import SliderItem from '../SliderItem/SliderItem';
-import BackButton from '../BackButton/BackButton';
-import SkipButton from '../SkipButton/SkipButton';
-import Link from '../Link/Link';
 import AuthSwitchPrompt from '../AuthSwitchPrompt/AuthSwitchPrompt';
 import {Colors} from '../../assets/Colors';
+import SliderHeader from '../SliderHeader/SliderHeader';
 
 const Slider = () => {
   const navigation = useNavigation();
@@ -50,25 +48,12 @@ const Slider = () => {
 
   return (
     <View>
-      <View style={style.header}>
-        <View style={style.headerLeft}>
-          {index > 0 && (
-            <BackButton onPress={() => setIndex(prevIndex => prevIndex - 1)} />
-          )}
-        </View>
-        <View style={style.headerRight}>
-          {index === 0 && (
-            <SkipButton onPress={() => navigation.replace(Routes.SignUp)} />
-          )}
-          {endReached && lowerDPI && (
-            <View style={style.signInButtonContainer}>
-              <Link onPress={() => navigation.replace(Routes.Login)}>
-                Sign In
-              </Link>
-            </View>
-          )}
-        </View>
-      </View>
+      <SliderHeader
+        index={index}
+        setIndex={setIndex}
+        endReached={endReached}
+        lowerDPI={lowerDPI}
+      />
       <Logo />
       <FlatList
         ref={flatListRef}
