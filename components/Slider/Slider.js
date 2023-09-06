@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, PixelRatio, useWindowDimensions, View} from 'react-native';
-import slides from '../../data/onboardingData';
+import slides from '../../data/slideData';
 import {Routes} from '../../navigation/Routes';
 import {useNavigation} from '@react-navigation/native';
 import style from './SliderStyles';
