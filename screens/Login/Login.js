@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
-import {Alert, SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {Alert, SafeAreaView, ScrollView, View} from 'react-native';
 import style from './LoginStyles';
-import Button from '../../components/Button/Button';
+import globalStyles from '../../assets/styles/globalStyles';
+import TextHeader from '../../components/TextHeader/TextHeader';
+import LogoView from '../../components/LogoView/LogoView';
+import FormInput from '../../components/FormInput/FormInput';
 import Link from '../../components/Link/Link';
+import Button from '../../components/Button/Button';
+import LineView from '../../components/LineView/LineView';
+import SocialButton from '../../components/SocialButton/SocialButton';
 import AuthSwitchPrompt from '../../components/AuthSwitchPrompt/AuthSwitchPrompt';
 import {Routes} from '../../navigation/Routes';
-import FormInput from '../../components/FormInput/FormInput';
-import SocialButton from '../../components/SocialButton/SocialButton';
-import LineView from '../../components/LineView/LineView';
-import LogoText from '../../components/LogoText/LogoText';
 import SuitescapeAPI from '../../api/SuitescapeAPI';
 
 const Login = ({navigation}) => {
@@ -38,8 +40,9 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView>
-      <ScrollView bounces={false}>
-        <LogoText>Login to your account</LogoText>
+      <ScrollView stickyHeaderIndices={[1]} bounces={false}>
+        <LogoView />
+        <TextHeader>Login to your account</TextHeader>
         <FormInput
           value={email}
           onChangeText={setEmail}
@@ -47,22 +50,20 @@ const Login = ({navigation}) => {
           keyboardType={'email-address'}
           textContentType={'emailAddress'}
           autoCapitalize={'none'}
+          errorMessage={errors.email}
         />
-        {errors.email && <Text style={style.errorText}>{errors.email}</Text>}
         <FormInput
           value={password}
           onChangeText={setPassword}
           placeholder={'Password'}
           textContentType={'none'}
           password={true}
+          errorMessage={errors.password}
         />
-        {errors.password && (
-          <Text style={style.errorText}>{errors.password}</Text>
-        )}
         <View style={style.forgotPasswordButtonContainer}>
           <Link>Forgot Password?</Link>
         </View>
-        <View style={style.loginButtonContainer}>
+        <View style={globalStyles.registrationButtonContainer}>
           <Button onPress={() => login()}>Login</Button>
         </View>
         <LineView>Or</LineView>
