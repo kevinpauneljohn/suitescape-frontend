@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, PixelRatio, useWindowDimensions, View} from 'react-native';
 import slides from '../../data/slideData';
 import {Routes} from '../../navigation/Routes';
@@ -46,6 +46,19 @@ const Slider = () => {
     />
   );
 
+  const viewabilityConfigCallbackPairs = useRef([
+    {
+      viewabilityConfig: {
+        itemVisiblePercentThreshold: 100,
+      },
+      onViewableItemsChanged: useCallback(({viewableItems}) => {
+        if (viewableItems[0]) {
+          setIndex(viewableItems[0].index);
+        }
+      }, []),
+    },
+  ]);
+
   return (
     <View>
       <SliderHeader
@@ -58,16 +71,15 @@ const Slider = () => {
       <FlatList
         ref={flatListRef}
         initialScrollIndex={index}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         keyExtractor={item => item.id}
         data={slides}
         renderItem={({item}) => <SliderItem {...item} width={width} />}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={false}
         snapToInterval={width}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
-        x
       />
       <View style={style.dotContainer}>
         {slides.map((_, i) => renderDot(i))}
