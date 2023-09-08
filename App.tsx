@@ -1,8 +1,14 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import MainNavigation from './navigation/MainNavigation';
+import BootSplash from 'react-native-bootsplash';
 
 const App = () => {
-  return <SafeAreaView />;
+  return (
+    <NavigationContainer onReady={() => BootSplash.hide()}>
+      <MainNavigation />
+    </NavigationContainer>
+  );
 };
 
 export default App;
