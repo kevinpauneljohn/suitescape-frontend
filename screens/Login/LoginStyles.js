@@ -5,8 +5,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginHorizontal: 25,
-    marginTop: 4,
-    marginBottom: 12,
+    marginVertical: 8,
   },
 });
 
