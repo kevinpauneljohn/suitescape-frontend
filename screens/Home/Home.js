@@ -1,8 +1,12 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
+import {ActivityIndicator, SafeAreaView} from 'react-native';
 
 const Home = () => {
-  return <SafeAreaView />;
+  return (
+    <SafeAreaView>
+      <ActivityIndicator />
+    </SafeAreaView>
+  );
 };
 
 export default Home;
