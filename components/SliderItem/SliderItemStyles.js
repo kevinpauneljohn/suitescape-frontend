@@ -14,6 +14,7 @@ const style = StyleSheet.create({
   title: {
     fontFamily: 'Roboto',
     textAlign: 'center',
+    color: 'black',
     fontSize: 20,
     paddingVertical: 30,
   },
