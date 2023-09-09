@@ -3,8 +3,9 @@ import {DefaultTheme} from '@react-navigation/native';
 
 const style = StyleSheet.create({
   text: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto-Bold',
     fontSize: 25,
+    lineHeight: 30,
     color: 'black',
     paddingVertical: 20,
   },
