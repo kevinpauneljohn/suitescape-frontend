@@ -34,6 +34,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		47ECEB3CABF641168F46B6FD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA97D128657444F08F7CBA36 /* Poppins-Bold.ttf */; };
 		6C2DBDA570104D56886DBF16 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6100297F5FEC487CB45EDDE6 /* Roboto-Regular.ttf */; };
+		70841AB2D19A425480A8E95A /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DD5556E3DFE4151B520012A /* Roboto-Bold.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-SuitescapeFrontend-SuitescapeFrontendTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-SuitescapeFrontend-SuitescapeFrontendTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D05B6A8AF9F54A21A3C5C7EC /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5AAED000C8AD458EA2E77B29 /* Inter-Medium.ttf */; };
@@ -82,6 +83,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SuitescapeFrontend/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-SuitescapeFrontend-SuitescapeFrontendTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SuitescapeFrontend-SuitescapeFrontendTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-SuitescapeFrontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuitescapeFrontend.debug.xcconfig"; path = "Target Support Files/Pods-SuitescapeFrontend/Pods-SuitescapeFrontend.debug.xcconfig"; sourceTree = "<group>"; };
+		3DD5556E3DFE4151B520012A /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		56398E7D84D041B8870A8740 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-SuitescapeFrontend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuitescapeFrontend.release.xcconfig"; path = "Target Support Files/Pods-SuitescapeFrontend/Pods-SuitescapeFrontend.release.xcconfig"; sourceTree = "<group>"; };
 		5AAED000C8AD458EA2E77B29 /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				BA97D128657444F08F7CBA36 /* Poppins-Bold.ttf */,
 				56398E7D84D041B8870A8740 /* Poppins-Regular.ttf */,
 				6100297F5FEC487CB45EDDE6 /* Roboto-Regular.ttf */,
+				3DD5556E3DFE4151B520012A /* Roboto-Bold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				095C98C72AA4B7D300AF57CD /* FontAwesome5_Solid.ttf in Resources */,
 				095C98BD2AA4B7D300AF57CD /* Fontisto.ttf in Resources */,
 				6C2DBDA570104D56886DBF16 /* Roboto-Regular.ttf in Resources */,
+				70841AB2D19A425480A8E95A /* Roboto-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
