@@ -1,8 +1,8 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {Pressable, Text, View} from 'react-native';
-import Facebook from '../../assets/svgs/icons8-facebook.svg';
-import Google from '../../assets/svgs/icons8-google.svg';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Facebook from '../../assets/images/svgs/icons8-facebook.svg';
+import Google from '../../assets/images/svgs/icons8-google.svg';
 import style from './SocialButtonStyles';
 
 const SocialButton = ({type}) => {
