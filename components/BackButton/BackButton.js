@@ -4,8 +4,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../../assets/Colors';
 import style from './BackButtonStyles';
 
-const BackButton = ({onPress}) => (
-  <Pressable onPress={onPress}>
+const BackButton = ({onPress, disabled}) => (
+  <Pressable onPress={onPress} disabled={disabled}>
     {({pressed}) => (
       <View
         style={{
