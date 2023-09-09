@@ -17,7 +17,7 @@ const style = StyleSheet.create({
   dot: {
     width: 15,
     height: 15,
-    margin: 5,
+    margin: 4,
     borderRadius: 10,
   },
   dotContainer: {
