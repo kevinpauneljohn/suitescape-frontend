@@ -19,7 +19,7 @@ const SocialButton = ({type}) => {
     },
     google: {
       label: 'Continue with Google',
-      iconComponent: <Google width={30} height={30} />,
+      iconComponent: <Google width={26} height={26} />,
       onPress: () => console.log('Google'),
     },
   };
