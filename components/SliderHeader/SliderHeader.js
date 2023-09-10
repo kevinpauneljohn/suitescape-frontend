@@ -8,27 +8,12 @@ import {Routes} from '../../navigation/Routes';
 import Link from '../Link/Link';
 import {settingsStorage} from '../../storage/settingsStorage';
 
-const SliderHeader = ({
-  index,
-  isScrolling,
-  setIndex,
-  setIsScrolling,
-  endReached,
-  lowerDPI,
-}) => {
+const SliderHeader = ({index, onPrevButtonClick, showSkipButton = false}) => {
   const navigation = useNavigation();
   return (
     <View style={style.header}>
       <View style={style.headerLeft}>
-        {index > 0 && (
-          <BackButton
-            disabled={isScrolling}
-            onPress={() => {
-              setIsScrolling(true);
-              setIndex(prevIndex => prevIndex - 1);
-            }}
-          />
-        )}
+        {index > 0 && <BackButton onPress={onPrevButtonClick} />}
       </View>
       <View style={style.headerRight}>
         {index === 0 && (
@@ -39,7 +24,7 @@ const SliderHeader = ({
             }}
           />
         )}
-        {endReached && lowerDPI && (
+        {showSkipButton && (
           <View style={style.signInButtonContainer}>
             <Link
               onPress={() => {

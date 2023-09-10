@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {FlatList, PixelRatio, useWindowDimensions, View} from 'react-native';
 import slides from '../../data/slideData';
 import {Routes} from '../../navigation/Routes';
@@ -16,7 +16,6 @@ const Slider = () => {
   const navigation = useNavigation();
 
   const [index, setIndex] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
   const flatListRef = useRef(null);
   const endReached = index === slides.length - 1;
 
@@ -26,24 +25,20 @@ const Slider = () => {
   const higherDPI = pixelRatio > 2;
   const lowerDPI = pixelRatio <= 2;
 
-  useEffect(() => {
-    flatListRef.current.scrollToIndex({index, animated: true});
-
-    const timeout = setTimeout(() => {
-      setIsScrolling(false);
-    }, 150);
-
-    return () => clearTimeout(timeout);
-  }, [index]);
-
   const handleNextButtonClick = () => {
     if (endReached) {
       settingsStorage.setBool('showOnboarding', false);
       navigation.replace(Routes.SignUp);
       return;
     }
-    setIsScrolling(true);
-    setIndex(prevIndex => prevIndex + 1);
+    flatListRef.current.scrollToIndex({index: index + 1, animated: true});
+  };
+
+  const handlePrevButtonClick = () => {
+    flatListRef.current.scrollToIndex({
+      index: index - 1,
+      animated: true,
+    });
   };
 
   const renderDot = i => (
@@ -57,34 +52,17 @@ const Slider = () => {
     />
   );
 
-  const viewabilityConfigCallbackPairs = useRef([
-    {
-      viewabilityConfig: {
-        itemVisiblePercentThreshold: 75,
-      },
-      onViewableItemsChanged: useCallback(({viewableItems}) => {
-        if (viewableItems[0]) {
-          setIndex(viewableItems[0].index);
-        }
-      }, []),
-    },
-  ]);
-
   return (
     <View>
       <SliderHeader
         index={index}
-        isScrolling={isScrolling}
-        setIndex={setIndex}
-        setIsScrolling={setIsScrolling}
-        endReached={endReached}
-        lowerDPI={lowerDPI}
+        onPrevButtonClick={handlePrevButtonClick}
+        showSkipButton={endReached && lowerDPI}
       />
       <Logo />
       <FlatList
         ref={flatListRef}
         initialScrollIndex={index}
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         keyExtractor={item => item.id}
         data={slides}
         renderItem={({item}) => <SliderItem {...item} width={width} />}
@@ -93,12 +71,17 @@ const Slider = () => {
         snapToInterval={width}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
+        onScroll={e => {
+          const offset = e.nativeEvent.contentOffset.x;
+          const newIndex = Math.round(offset / width);
+          setIndex(newIndex);
+        }}
       />
       <View style={style.dotContainer}>
         {slides.map((_, i) => renderDot(i))}
       </View>
       <View style={style.nextButtonContainer}>
-        <Button disabled={isScrolling} onPress={() => handleNextButtonClick()}>
+        <Button onPress={() => handleNextButtonClick()}>
           {endReached ? 'Get Started' : 'Next'}
         </Button>
       </View>
