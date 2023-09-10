@@ -81,7 +81,9 @@ const Login = ({navigation}) => {
           ref={passwordRef}
         />
         <View style={style.forgotPasswordButtonContainer}>
-          <Link onPress={() => console.log('Forgot Password')}>
+          <Link
+            onPress={() => console.log('Forgot Password')}
+            textStyle={style.forgotPasswordText}>
             Forgot Password?
           </Link>
         </View>
