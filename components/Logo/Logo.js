@@ -4,8 +4,8 @@ import style from './LogoStyles';
 
 const Logo = () => (
   <View style={style.container}>
-    <Text style={{...style.logoText, ...style.boldText}}>Suitescape</Text>
-    <Text style={{...style.logoText, ...style.fixText}}>PH</Text>
+    <Text style={{...style.logoText, ...style.bold}}>Suitescape</Text>
+    <Text style={style.logoText}>PH</Text>
   </View>
 );
 

@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
   container: {
@@ -14,11 +14,8 @@ const style = StyleSheet.create({
     fontSize: 40,
     textTransform: 'uppercase',
   },
-  boldText: {
-    fontFamily: 'Poppins-Bold',
-  },
-  fixText: {
-    paddingTop: Platform.OS === 'android' ? 3 : 0,
+  bold: {
+    fontWeight: 'bold',
   },
 });
 
