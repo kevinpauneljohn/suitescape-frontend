@@ -9,17 +9,17 @@ const SocialButton = ({type}) => {
   const SocialTypes = {
     phone: {
       label: 'Continue with Phone',
-      iconComponent: <Icon name={'mobile-phone'} size={30} color={'gray'} />,
+      iconComponent: <Icon name={'mobile-phone'} size={40} color={'gray'} />,
       onPress: () => console.log('Phone'),
     },
     facebook: {
       label: 'Continue with Facebook',
-      iconComponent: <Facebook width={30} height={30} />,
+      iconComponent: <Facebook width={35} height={35} />,
       onPress: () => console.log('Facebook'),
     },
     google: {
       label: 'Continue with Google',
-      iconComponent: <Google width={26} height={26} />,
+      iconComponent: <Google width={32} height={32} />,
       onPress: () => console.log('Google'),
     },
   };
@@ -32,7 +32,9 @@ const SocialButton = ({type}) => {
             ...style.secondaryContainer,
             ...(pressed && {opacity: 0.5}),
           }}>
-          {SocialTypes[type]?.iconComponent}
+          <View style={style.iconContainer}>
+            {SocialTypes[type]?.iconComponent}
+          </View>
           <Text style={style.text}>{SocialTypes[type]?.label}</Text>
         </View>
       )}
