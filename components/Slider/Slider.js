@@ -4,7 +4,7 @@ import slides from '../../data/slideData';
 import {Routes} from '../../navigation/Routes';
 import {useNavigation} from '@react-navigation/native';
 import style from './SliderStyles';
-import Logo from '../Logo/Logo';
+import LogoText from '../LogoText/LogoText';
 import Button from '../Button/Button';
 import SliderItem from '../SliderItem/SliderItem';
 import AuthSwitchPrompt from '../AuthSwitchPrompt/AuthSwitchPrompt';
@@ -59,7 +59,7 @@ const Slider = () => {
         onPrevButtonClick={handlePrevButtonClick}
         showSkipButton={endReached && lowerDPI}
       />
-      <Logo />
+      <LogoText />
       <FlatList
         ref={flatListRef}
         initialScrollIndex={index}
