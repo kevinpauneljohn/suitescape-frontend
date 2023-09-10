@@ -1,7 +1,7 @@
-import {Appearance, PixelRatio, StyleSheet} from 'react-native';
+import {PixelRatio, StyleSheet} from 'react-native';
+import globalStyles from '../../assets/styles/globalStyles';
 
 const imagePixelSize = PixelRatio.getPixelSizeForLayoutSize(120);
-const colorScheme = Appearance.getColorScheme();
 
 const style = StyleSheet.create({
   container: {
@@ -13,9 +13,9 @@ const style = StyleSheet.create({
     height: imagePixelSize,
   },
   title: {
+    color: globalStyles.themeColor,
     fontFamily: 'Roboto',
     textAlign: 'center',
-    color: colorScheme === 'dark' ? 'white' : 'black',
     fontSize: 20,
     paddingVertical: 30,
   },

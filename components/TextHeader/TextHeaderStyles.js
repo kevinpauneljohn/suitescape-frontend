@@ -1,16 +1,15 @@
 import {StyleSheet} from 'react-native';
-import {DefaultTheme} from '@react-navigation/native';
+import globalStyles from '../../assets/styles/globalStyles';
 
 const style = StyleSheet.create({
   text: {
+    color: globalStyles.themeColor,
     fontFamily: 'Roboto-Bold',
     fontSize: 25,
     lineHeight: 30,
-    color: 'black',
     paddingVertical: 20,
   },
   container: {
-    backgroundColor: DefaultTheme.colors.background,
     flex: 1,
   },
 });

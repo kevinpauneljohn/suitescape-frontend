@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import globalStyles from '../../assets/styles/globalStyles';
 
 const style = StyleSheet.create({
   container: {
@@ -8,8 +9,8 @@ const style = StyleSheet.create({
     paddingBottom: 10,
   },
   logoText: {
+    color: globalStyles.themeColor,
     fontFamily: 'Poppins',
-    color: 'black',
     letterSpacing: 0.15,
     fontSize: 40,
     textTransform: 'uppercase',

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import globalStyles from '../../assets/styles/globalStyles';
 
 const style = StyleSheet.create({
   container: {
@@ -7,6 +8,7 @@ const style = StyleSheet.create({
     marginVertical: 10,
   },
   textContainer: {
+    color: globalStyles.themeColor,
     flex: 1,
   },
   text: {

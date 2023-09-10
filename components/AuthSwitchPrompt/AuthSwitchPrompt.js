@@ -20,7 +20,6 @@ const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
         style={{
           ...style.text,
           ...style.hint,
-          ...(onboarding && {color: 'black'}),
         }}>
         {register ? "Don't have an account?" : 'Already have an account?'}
       </Text>
