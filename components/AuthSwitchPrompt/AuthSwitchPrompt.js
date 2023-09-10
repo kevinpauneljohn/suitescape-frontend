@@ -18,12 +18,15 @@ const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
     <View style={style.container}>
       <Text
         style={{
-          ...style.hintText,
+          ...style.text,
+          ...style.hint,
           ...(onboarding && {color: 'black'}),
         }}>
         {register ? "Don't have an account?" : 'Already have an account?'}
       </Text>
-      <Link onPress={nextScreen}>{register ? 'Sign Up' : 'Sign In'}</Link>
+      <Link onPress={nextScreen} textStyle={style.text}>
+        {register ? 'Create Account' : 'Sign In'}
+      </Link>
     </View>
   );
 };
