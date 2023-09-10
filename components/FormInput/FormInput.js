@@ -10,6 +10,7 @@ const theme = {
     primary: Colors.blue,
     background: 'white',
     text: 'black',
+    placeholder: Colors.blue,
     onSurfaceVariant: 'gray',
   },
   roundness: 10,
@@ -104,6 +105,9 @@ const FormInput = forwardRef(
             isVisible={showDatepicker}
             onCancel={() => setShowDatepicker(false)}
             onConfirm={handleDateConfirm}
+            date={
+              value && !isNaN(Date.parse(value)) ? new Date(value) : new Date()
+            }
           />
         )}
       </>
