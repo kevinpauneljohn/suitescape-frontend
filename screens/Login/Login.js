@@ -76,7 +76,6 @@ const Login = ({navigation}) => {
           placeholder={'Password'}
           textContentType={'none'}
           errorMessage={errors?.password}
-          clearErrorMessage={() => setErrors({})}
           onSubmitEditing={() => login()}
           ref={passwordRef}
         />
