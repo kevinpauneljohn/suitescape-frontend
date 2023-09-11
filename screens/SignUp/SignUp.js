@@ -24,7 +24,6 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const SignUp = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
   const [lastName, setLastName] = useState('');
   const [birthday, setBirthday] = useState('');
   const [email, setEmail] = useState('');
@@ -34,7 +33,6 @@ const SignUp = ({navigation}) => {
   const [checked, setChecked] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const middleNameRef = useRef(null);
   const lastNameRef = useRef(null);
   const birthdayRef = useRef(null);
   const emailRef = useRef(null);
@@ -45,7 +43,6 @@ const SignUp = ({navigation}) => {
     useCallback(() => {
       return () => {
         setFirstName('');
-        setMiddleName('');
         setLastName('');
         setBirthday('');
         setEmail('');
@@ -61,19 +58,17 @@ const SignUp = ({navigation}) => {
   useEffect(() => {
     setErrors(prevErrors => ({
       firstname: firstName ? '' : prevErrors.firstname,
-      middlename: middleName ? '' : prevErrors.middlename,
       lastname: lastName ? '' : prevErrors.lastname,
       date_of_birth: birthday ? '' : prevErrors.date_of_birth,
       email: email ? '' : prevErrors.email,
       password: password ? '' : prevErrors.password,
     }));
-  }, [birthday, email, firstName, lastName, middleName, password]);
+  }, [birthday, email, firstName, lastName, password]);
 
   const register = async () => {
     try {
       const response = await SuitescapeAPI.post('/register', {
         firstname: firstName,
-        middlename: middleName,
         lastname: lastName,
         date_of_birth: birthday,
         email: email,
@@ -114,24 +109,9 @@ const SignUp = ({navigation}) => {
             errorMessage={errors?.firstname}
             returnKeyType={'next'}
             onSubmitEditing={() => {
-              middleNameRef.current.focus();
-            }}
-            blurOnSubmit={false}
-          />
-          <FormInput
-            value={middleName}
-            onChangeText={setMiddleName}
-            placeholder={'Middle Name'}
-            textContentType={'middleName'}
-            autoCapitalize={'words'}
-            autoCorrect={false}
-            errorMessage={errors?.middlename}
-            returnKeyType={'next'}
-            onSubmitEditing={() => {
               lastNameRef.current.focus();
             }}
             blurOnSubmit={false}
-            ref={middleNameRef}
           />
           <FormInput
             value={lastName}
