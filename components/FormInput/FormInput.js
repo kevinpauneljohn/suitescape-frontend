@@ -4,17 +4,7 @@ import {HelperText, TextInput} from 'react-native-paper';
 import style from './FormInputStyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {Colors} from '../../assets/Colors';
-
-const theme = {
-  colors: {
-    primary: Colors.blue,
-    background: 'white',
-    text: 'black',
-    placeholder: Colors.blue,
-    onSurfaceVariant: 'gray',
-  },
-  roundness: 10,
-};
+import {useTheme} from '@react-navigation/native';
 
 const FormInput = forwardRef(
   (
@@ -31,6 +21,18 @@ const FormInput = forwardRef(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showDatepicker, setShowDatepicker] = useState(false);
+
+    const {colors} = useTheme();
+
+    const inputTheme = {
+      colors: {
+        ...colors,
+        primary: Colors.blue,
+        placeholder: Colors.blue,
+        onSurfaceVariant: 'gray',
+      },
+      roundness: 10,
+    };
 
     const handlePasswordPress = () => {
       setShowPassword(prev => !prev);
@@ -86,13 +88,14 @@ const FormInput = forwardRef(
           }}>
           <TextInput
             {...props}
-            theme={theme}
+            theme={inputTheme}
             mode={'outlined'}
             value={value}
             onChangeText={onChangeText}
             label={placeholder}
             secureTextEntry={type === 'password' && !showPassword}
             outlineColor={errorMessage ? 'red' : null}
+            textColor={colors.text}
             ref={ref}
             right={
               type !== 'text' && (
