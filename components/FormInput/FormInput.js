@@ -100,8 +100,8 @@ const FormInput = forwardRef(
                   icon={
                     type === 'password'
                       ? showPassword
-                        ? 'eye-off'
-                        : 'eye'
+                        ? 'eye'
+                        : 'eye-off'
                       : 'calendar'
                   }
                   onPress={
