@@ -1,9 +1,7 @@
 import {StyleSheet} from 'react-native';
-import globalStyles from '../../assets/styles/globalStyles';
 
 const style = StyleSheet.create({
   text: {
-    color: globalStyles.themeColor,
     fontFamily: 'Roboto-Bold',
     fontSize: 25,
     lineHeight: 30,

@@ -1,5 +1,4 @@
 import {PixelRatio, StyleSheet} from 'react-native';
-import globalStyles from '../../assets/styles/globalStyles';
 
 const imagePixelSize = PixelRatio.getPixelSizeForLayoutSize(120);
 
@@ -13,7 +12,6 @@ const style = StyleSheet.create({
     height: imagePixelSize,
   },
   title: {
-    color: globalStyles.themeColor,
     fontFamily: 'Roboto',
     textAlign: 'center',
     fontSize: 20,
