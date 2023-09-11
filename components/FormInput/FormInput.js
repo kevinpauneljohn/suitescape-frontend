@@ -1,5 +1,5 @@
 import React, {useState, memo, forwardRef} from 'react';
-import {View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import {HelperText, TextInput} from 'react-native-paper';
 import style from './FormInputStyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -22,6 +22,7 @@ const FormInput = forwardRef(
       type = 'text', // text, password, date
       value = null,
       onChangeText = null,
+      onDateConfirm = null,
       placeholder = '',
       errorMessage = null,
       ...props
@@ -37,17 +38,19 @@ const FormInput = forwardRef(
 
     const handleDatePress = () => {
       setShowDatepicker(true);
+      Keyboard.dismiss();
     };
 
     const handleDateConfirm = date => {
       if (!onChangeText) {
-        console.log(
-          'onChangeText is not defined',
-          date.toISOString().split('T')[0],
-        );
+        console.log('onChangeText is not defined');
         return;
       }
-      onChangeText(date.toISOString().split('T')[0]);
+
+      const confirmed = onDateConfirm && onDateConfirm(date);
+      if (confirmed !== false || !onDateConfirm) {
+        onChangeText(date.toISOString().split('T')[0]);
+      }
       setShowDatepicker(false);
     };
 
@@ -56,6 +59,16 @@ const FormInput = forwardRef(
         return null;
       }
 
+      // Example error message:
+      // {
+      //   "email": [
+      //     "The email has already been taken."
+      //   ],
+      //   "password": [
+      //     "The password must be at least 8 characters.",
+      //     "The password confirmation does not match."
+      //   ]
+      // }
       return errorMessage.map((message, index) => (
         <HelperText key={index} type={'error'} visible={message}>
           {message}

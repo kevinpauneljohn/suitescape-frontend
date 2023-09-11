@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -87,6 +88,14 @@ const SignUp = ({navigation}) => {
     }
   };
 
+  const handleBirthdayConfirm = date => {
+    const age = new Date().getFullYear() - date.getFullYear();
+    if (age < 18) {
+      Alert.alert('You must be 18 years old or above to register.');
+      return false;
+    }
+  };
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView
@@ -143,6 +152,7 @@ const SignUp = ({navigation}) => {
             type={'date'}
             value={birthday}
             onChangeText={setBirthday}
+            onDateConfirm={handleBirthdayConfirm}
             placeholder={'Birthday (YYYY-MM-DD)'}
             textContentType={'none'}
             keyboardType={'phone-pad'}
