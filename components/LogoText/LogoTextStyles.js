@@ -5,7 +5,7 @@ const style = StyleSheet.create({
   container: {
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingTop: 30,
+    paddingTop: 40,
     paddingBottom: 10,
   },
   logoText: {
