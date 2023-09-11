@@ -11,7 +11,10 @@ const Stack = createNativeStackNavigator();
 const MainNavigation = () => (
   <Stack.Navigator
     initialRouteName={Routes.Onboarding}
-    screenOptions={{headerShown: false}}>
+    screenOptions={{
+      headerShown: false,
+      contentStyle: {backgroundColor: 'white'},
+    }}>
     <Stack.Screen name={Routes.Onboarding} component={Onboarding} />
     <Stack.Screen name={Routes.Home} component={Home} />
     <Stack.Screen name={Routes.Login} component={Login} />
