@@ -83,9 +83,12 @@ const SignUp = ({navigation}) => {
     }
   };
 
-  const handleBirthdayConfirm = date => {
-    const age = new Date().getFullYear() - date.getFullYear();
-    if (age < 18) {
+  const handleBirthdayConfirm = birthdate => {
+    const today = new Date();
+    const eighteenthBirthday = new Date(birthdate);
+    eighteenthBirthday.setFullYear(birthdate.getFullYear() + 18);
+
+    if (eighteenthBirthday > today) {
       Alert.alert('You must be 18 years old or above to register.');
       return false;
     }
