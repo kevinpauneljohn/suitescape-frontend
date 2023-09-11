@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import Slider from '../../components/Slider/Slider';
 import {useSettings} from '../../storage/settingsStorage';
+import {useUser} from '../../storage/userStorage';
 import {Routes} from '../../navigation/Routes';
 
 const Onboarding = ({navigation}) => {
@@ -9,7 +10,7 @@ const Onboarding = ({navigation}) => {
     'skipOnboarding',
     false,
   );
-  const [token, _setToken] = useSettings('token', '');
+  const [token, _setToken] = useUser('token', '');
 
   useEffect(() => {
     // Reset settings for testing (Uncomment and reload the app after)
