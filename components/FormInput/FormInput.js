@@ -48,6 +48,7 @@ const FormInput = forwardRef(
       }
 
       const confirmed = onDateConfirm && onDateConfirm(date);
+
       if (confirmed !== false || !onDateConfirm) {
         onChangeText(date.toISOString().split('T')[0]);
       }
