@@ -7,6 +7,7 @@ import {
   ScrollView,
   View,
 } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import globalStyles from '../../assets/styles/globalStyles';
 import TextHeader from '../../components/TextHeader/TextHeader';
 import LogoView from '../../components/LogoView/LogoView';
@@ -20,7 +21,6 @@ import AuthSwitchPrompt from '../../components/AuthSwitchPrompt/AuthSwitchPrompt
 import {Routes} from '../../navigation/Routes';
 import SuitescapeAPI from '../../services/SuitescapeAPI';
 import {handleApiError, handleApiResponse} from '../../utilities/apiHelpers';
-import {useFocusEffect} from '@react-navigation/native';
 
 const SignUp = ({navigation}) => {
   const [firstName, setFirstName] = useState('');

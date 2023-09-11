@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import style from './LoginStyles';
 import globalStyles from '../../assets/styles/globalStyles';
 import TextHeader from '../../components/TextHeader/TextHeader';
@@ -13,7 +14,6 @@ import AuthSwitchPrompt from '../../components/AuthSwitchPrompt/AuthSwitchPrompt
 import {Routes} from '../../navigation/Routes';
 import SuitescapeAPI from '../../services/SuitescapeAPI';
 import {handleApiError, handleApiResponse} from '../../utilities/apiHelpers';
-import {useFocusEffect} from '@react-navigation/native';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
