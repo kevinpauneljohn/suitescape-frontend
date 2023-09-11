@@ -5,22 +5,22 @@ import {useSettings} from '../../storage/settingsStorage';
 import {Routes} from '../../navigation/Routes';
 
 const Onboarding = ({navigation}) => {
-  const [showOnboarding, _setShowOnboarding] = useSettings(
-    'showOnboarding',
-    true,
+  const [skipOnboarding, _setSkipOnboarding] = useSettings(
+    'skipOnboarding',
+    false,
   );
   const [token, _setToken] = useSettings('token', '');
 
   useEffect(() => {
     // Reset settings for testing (Uncomment and reload the app after)
-    // _setShowOnboarding(true);
+    // _setSkipOnboarding(false);
     // _setToken('');
 
     if (token) {
       navigation.replace(Routes.Home);
       return;
     }
-    if (!showOnboarding) {
+    if (skipOnboarding) {
       navigation.replace(Routes.Login);
     }
   });

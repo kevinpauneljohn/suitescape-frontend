@@ -27,7 +27,7 @@ const Slider = () => {
 
   const handleNextButtonClick = () => {
     if (endReached) {
-      settingsStorage.setBool('showOnboarding', false);
+      settingsStorage.setBool('skipOnboarding', true);
       navigation.replace(Routes.SignUp);
       return;
     }
