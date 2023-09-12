@@ -1,5 +1,5 @@
 import React, {useState, memo, forwardRef} from 'react';
-import {Keyboard, View} from 'react-native';
+import {Keyboard, Platform, View} from 'react-native';
 import {HelperText, TextInput} from 'react-native-paper';
 import style from './FormInputStyles';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -125,6 +125,7 @@ const FormInput = forwardRef(
             date={
               value && !isNaN(Date.parse(value)) ? new Date(value) : new Date()
             }
+            display={Platform.OS === 'ios' ? 'inline' : 'default'}
           />
         )}
       </>
