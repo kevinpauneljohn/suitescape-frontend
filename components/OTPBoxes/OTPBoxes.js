@@ -2,9 +2,18 @@ import React, {useRef, useState} from 'react';
 import {TextInput, View} from 'react-native';
 import style from './OTPBoxesStyles';
 
-const OTPBoxes = ({size = 6}) => {
+const OTPBoxes = ({size = 6, onOTPChange}) => {
   const [OTP, setOTP] = useState(Array(size).fill(''));
   const inputRefs = useRef(Array(size).fill(null));
+
+  const updateOTP = (index, value) => {
+    let newOTP = [...OTP];
+    newOTP[index] = value;
+    setOTP(newOTP);
+    if (onOTPChange) {
+      onOTPChange(newOTP.join(''));
+    }
+  };
 
   const renderOTPBoxes = () => {
     let OTPInputs = [];
@@ -18,9 +27,7 @@ const OTPBoxes = ({size = 6}) => {
           keyboardType={'numeric'}
           value={OTP[i]}
           onChangeText={value => {
-            let newOTP = [...OTP];
-            newOTP[i] = value;
-            setOTP(newOTP);
+            updateOTP(i, value);
             if (value && i < size - 1) {
               inputRefs.current[i + 1].focus();
             }
