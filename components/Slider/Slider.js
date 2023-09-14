@@ -65,7 +65,7 @@ const Slider = () => {
         initialScrollIndex={index}
         keyExtractor={item => item.id}
         data={slides}
-        renderItem={({item}) => <SliderItem {...item} width={width} />}
+        renderItem={({item}) => <SliderItem {...item} />}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         snapToInterval={width}
