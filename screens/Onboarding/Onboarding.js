@@ -18,7 +18,7 @@ const Onboarding = ({navigation}) => {
     // _setToken('');
 
     if (token) {
-      navigation.replace(Routes.Home);
+      navigation.replace(Routes.BottomTabs);
       return;
     }
     if (skipOnboarding) {

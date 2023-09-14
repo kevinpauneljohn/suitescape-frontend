@@ -43,7 +43,7 @@ const Login = ({navigation}) => {
     try {
       const response = await SuitescapeAPI.post('/login', {email, password});
       handleApiResponse(response, setErrors, () =>
-        navigation.replace(Routes.Home),
+        navigation.replace(Routes.BottomTabs),
       );
     } catch (err) {
       handleApiError(err, setErrors);
