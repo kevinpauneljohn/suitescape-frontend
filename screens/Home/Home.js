@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {
   FlatList,
   Pressable,
@@ -9,6 +9,7 @@ import {
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useFocusEffect} from '@react-navigation/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 const Home = () => {
   const videos = Array(5)
@@ -21,16 +22,42 @@ const Home = () => {
     .map((item, id) => ({...item, id: id + 1}));
 
   const [index, setIndex] = useState(0);
-  const isVideoPaused = itemId => index === null || index !== itemId - 1;
+  const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   const {width, height} = useWindowDimensions();
+  const bottomTabHeight = useBottomTabBarHeight();
 
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle('light-content', true);
-      return () => setIndex(null);
-    }, []),
+
+      if (lastPlayedIndex !== null) {
+        setIndex(lastPlayedIndex);
+      }
+      return () => {
+        setIndex(null);
+      };
+    }, [lastPlayedIndex]),
   );
+
+  const viewabilityConfigCallbackPairs = useRef([
+    {
+      viewabilityConfig: {
+        itemVisiblePercentThreshold: 90,
+      },
+      onViewableItemsChanged: useCallback(({viewableItems}) => {
+        if (viewableItems.length > 0) {
+          const firstViewableItem = viewableItems[0];
+          if (firstViewableItem.isViewable) {
+            const newIndex = firstViewableItem.item.id - 1;
+            setIndex(newIndex);
+            setLastPlayedIndex(newIndex);
+          }
+        }
+      }, []),
+    },
+  ]);
 
   return (
     <View style={{backgroundColor: 'black'}}>
@@ -38,13 +65,13 @@ const Home = () => {
         data={videos}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => {
-          const paused = isVideoPaused(item.id);
+          const paused = isPaused || index === null || index !== item.id - 1;
           return (
             <Pressable
               onPress={() => {
-                setIndex(index === null ? item.id - 1 : null);
+                setIsPaused(prevState => !prevState);
               }}>
-              {paused && (
+              {isPaused && (
                 <View
                   style={{
                     position: 'absolute',
@@ -66,24 +93,22 @@ const Home = () => {
               )}
               <Video
                 source={item.url}
+                resizeMode={'cover'}
                 paused={paused}
                 loop={true}
-                resizeMode={'contain'}
                 onError={e => console.log(e)}
                 style={{width, height}}
               />
             </Pressable>
           );
         }}
+        contentContainerStyle={{marginBottom: bottomTabHeight}}
         showsVerticalScrollIndicator={false}
         snapToInterval={height}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
-        onScroll={e => {
-          const offset = e.nativeEvent.contentOffset.y;
-          const newIndex = Math.round(offset / height);
-          setIndex(newIndex);
-        }}
+        onMomentumScrollBegin={() => setIsPaused(false)}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
     </View>
   );
