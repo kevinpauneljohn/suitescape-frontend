@@ -1,7 +1,6 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {FlatList, StatusBar, useWindowDimensions, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import VideoItem from '../../components/VideoItem/VideoItem';
 import style from './HomeStyles';
 
@@ -24,7 +23,6 @@ const Home = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   const {width, height} = useWindowDimensions();
-  const bottomTabHeight = useBottomTabBarHeight();
 
   useFocusEffect(
     useCallback(() => {
@@ -70,7 +68,6 @@ const Home = () => {
             height={height}
           />
         )}
-        contentContainerStyle={{marginBottom: bottomTabHeight}}
         showsVerticalScrollIndicator={false}
         snapToInterval={height}
         snapToAlignment={'center'}
