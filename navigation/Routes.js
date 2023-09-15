@@ -5,4 +5,7 @@ export const Routes = {
   LOGIN: 'Login',
   SIGNUP: 'SignUp',
   MESSAGES: 'Messages',
+  SEARCH: 'Search',
+  BOOKINGS: 'Bookings',
+  PROFILE: 'Profile',
 };
