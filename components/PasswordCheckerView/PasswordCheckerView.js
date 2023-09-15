@@ -3,15 +3,15 @@ import {View} from 'react-native';
 import style from './PasswordCheckerStyles';
 import CriteriaRow from '../CriteriaRow/CriteriaRow';
 
-const REQUIRED_SIZE = 4;
+const REQUIRED_SIZE = 5;
 
 const PasswordCheckerView = ({password, setIsPasswordValid}) => {
   const criteria = useMemo(() => {
     return {
       hasMinimumLength: password.length >= 8,
       hasCapitalLetter: /[A-Z]/.test(password),
-      hasNumber: /[0-9]/.test(password),
       hasLowerCaseLetter: /[a-z]/.test(password),
+      hasNumber: /[0-9]/.test(password),
       hasSpecialCharacter: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(
         password,
       ),
@@ -21,7 +21,7 @@ const PasswordCheckerView = ({password, setIsPasswordValid}) => {
   const criteriaMetCount = Object.values(criteria).filter(Boolean).length;
 
   useEffect(() => {
-    setIsPasswordValid(criteriaMetCount >= REQUIRED_SIZE);
+    setIsPasswordValid(criteriaMetCount === REQUIRED_SIZE);
   }, [criteriaMetCount, setIsPasswordValid]);
 
   return (
@@ -33,6 +33,10 @@ const PasswordCheckerView = ({password, setIsPasswordValid}) => {
       <CriteriaRow
         met={criteria.hasCapitalLetter}
         text="Must have at least 1 capital letter"
+      />
+      <CriteriaRow
+        met={criteria.hasLowerCaseLetter}
+        text="Must have at least 1 lowercase letter"
       />
       <CriteriaRow
         met={criteria.hasNumber}
