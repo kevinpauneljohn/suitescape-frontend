@@ -1,15 +1,13 @@
 import {StyleSheet} from 'react-native';
-import {DefaultTheme} from '@react-navigation/native';
 
 const style = StyleSheet.create({
   text: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto-Bold',
     fontSize: 25,
-    color: 'black',
+    lineHeight: 30,
     paddingVertical: 20,
   },
   container: {
-    backgroundColor: DefaultTheme.colors.background,
     flex: 1,
   },
 });

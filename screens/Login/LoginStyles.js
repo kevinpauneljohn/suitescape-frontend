@@ -4,9 +4,12 @@ const style = StyleSheet.create({
   forgotPasswordButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginHorizontal: 25,
-    marginTop: 4,
+    marginHorizontal: 23,
+    marginTop: 6,
     marginBottom: 12,
+  },
+  forgotPasswordText: {
+    fontSize: 14,
   },
 });
 

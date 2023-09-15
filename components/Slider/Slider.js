@@ -1,15 +1,16 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {FlatList, PixelRatio, useWindowDimensions, View} from 'react-native';
 import slides from '../../data/slideData';
 import {Routes} from '../../navigation/Routes';
 import {useNavigation} from '@react-navigation/native';
 import style from './SliderStyles';
-import Logo from '../Logo/Logo';
+import LogoText from '../LogoText/LogoText';
 import Button from '../Button/Button';
 import SliderItem from '../SliderItem/SliderItem';
 import AuthSwitchPrompt from '../AuthSwitchPrompt/AuthSwitchPrompt';
 import {Colors} from '../../assets/Colors';
 import SliderHeader from '../SliderHeader/SliderHeader';
+import {settingsStorage} from '../../storage/settingsStorage';
 
 const Slider = () => {
   const navigation = useNavigation();
@@ -24,16 +25,20 @@ const Slider = () => {
   const higherDPI = pixelRatio > 2;
   const lowerDPI = pixelRatio <= 2;
 
-  useEffect(() => {
-    flatListRef.current.scrollToIndex({index, animated: true});
-  }, [index]);
-
   const handleNextButtonClick = () => {
     if (endReached) {
+      settingsStorage.setBool('skipOnboarding', true);
       navigation.replace(Routes.SignUp);
       return;
     }
-    setIndex(prevIndex => prevIndex + 1);
+    flatListRef.current.scrollToIndex({index: index + 1, animated: true});
+  };
+
+  const handlePrevButtonClick = () => {
+    flatListRef.current.scrollToIndex({
+      index: index - 1,
+      animated: true,
+    });
   };
 
   const renderDot = i => (
@@ -41,45 +46,36 @@ const Slider = () => {
       key={i}
       style={{
         ...style.dot,
+        ...(i === index && {width: 30}),
         ...{backgroundColor: i === index ? Colors.blue : 'gray'},
       }}
     />
   );
 
-  const viewabilityConfigCallbackPairs = useRef([
-    {
-      viewabilityConfig: {
-        itemVisiblePercentThreshold: 100,
-      },
-      onViewableItemsChanged: useCallback(({viewableItems}) => {
-        if (viewableItems[0]) {
-          setIndex(viewableItems[0].index);
-        }
-      }, []),
-    },
-  ]);
-
   return (
     <View>
       <SliderHeader
         index={index}
-        setIndex={setIndex}
-        endReached={endReached}
-        lowerDPI={lowerDPI}
+        onPrevButtonClick={handlePrevButtonClick}
+        showSkipButton={endReached && lowerDPI}
       />
-      <Logo />
+      <LogoText />
       <FlatList
         ref={flatListRef}
         initialScrollIndex={index}
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         keyExtractor={item => item.id}
         data={slides}
-        renderItem={({item}) => <SliderItem {...item} width={width} />}
+        renderItem={({item}) => <SliderItem {...item} />}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         snapToInterval={width}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
+        onScroll={e => {
+          const offset = e.nativeEvent.contentOffset.x;
+          const newIndex = Math.round(offset / width);
+          setIndex(newIndex);
+        }}
       />
       <View style={style.dotContainer}>
         {slides.map((_, i) => renderDot(i))}

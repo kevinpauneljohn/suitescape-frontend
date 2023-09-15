@@ -7,9 +7,11 @@ const style = StyleSheet.create({
     marginTop: 25,
     marginBottom: 40,
   },
-  hintText: {
+  text: {
+    fontSize: 14,
+  },
+  hint: {
     fontFamily: 'Roboto',
-    fontSize: 16,
     paddingRight: 4,
     color: 'gray',
   },

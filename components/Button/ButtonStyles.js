@@ -3,7 +3,7 @@ import {Colors} from '../../assets/Colors';
 
 const style = StyleSheet.create({
   button: {
-    marginHorizontal: 28,
+    marginHorizontal: 23,
     paddingVertical: 12,
     borderRadius: 10,
     justifyContent: 'center',

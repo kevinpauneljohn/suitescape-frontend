@@ -11,13 +11,13 @@ const style = StyleSheet.create({
     marginLeft: 15,
   },
   headerRight: {
-    marginRight: 26,
+    marginRight: 22,
     marginTop: 23,
   },
   dot: {
     width: 15,
     height: 15,
-    margin: 5,
+    margin: 4,
     borderRadius: 10,
   },
   dotContainer: {
@@ -26,7 +26,6 @@ const style = StyleSheet.create({
   },
   nextButtonContainer: {
     marginTop: 30,
-    marginHorizontal: 40,
   },
   signInButtonContainer: {
     padding: 5,

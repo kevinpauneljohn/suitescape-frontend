@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {Alert, SafeAreaView, ScrollView, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {SafeAreaView, ScrollView, View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import style from './LoginStyles';
 import globalStyles from '../../assets/styles/globalStyles';
 import TextHeader from '../../components/TextHeader/TextHeader';
@@ -11,38 +12,49 @@ import LineView from '../../components/LineView/LineView';
 import SocialButton from '../../components/SocialButton/SocialButton';
 import AuthSwitchPrompt from '../../components/AuthSwitchPrompt/AuthSwitchPrompt';
 import {Routes} from '../../navigation/Routes';
-import SuitescapeAPI from '../../api/SuitescapeAPI';
+import SuitescapeAPI from '../../services/SuitescapeAPI';
+import {handleApiError, handleApiResponse} from '../../utilities/apiHelpers';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
+  const passwordRef = useRef(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setEmail('');
+        setPassword('');
+        setErrors({});
+      };
+    }, []),
+  );
+
+  useEffect(() => {
+    setErrors(prevErrors => ({
+      email: email ? '' : prevErrors.email,
+      password: password ? '' : prevErrors.password,
+    }));
+  }, [email, password]);
+
   const login = async () => {
     try {
       const response = await SuitescapeAPI.post('/login', {email, password});
-      if (response.data.errors) {
-        Alert.alert('Error', response.data.message);
-        setErrors(response.data.errors);
-        return;
-      }
-      Alert.alert('Success', response.data.message);
-      navigation.replace(Routes.Home);
+      handleApiResponse(response, setErrors, () =>
+        navigation.replace(Routes.BottomTabs),
+      );
     } catch (err) {
-      if (err.response) {
-        setErrors(err.response.data.errors);
-      } else {
-        Alert.alert('Error', err.message);
-        console.log(err.request);
-      }
+      handleApiError(err, setErrors);
     }
   };
 
   return (
     <SafeAreaView>
-      <ScrollView stickyHeaderIndices={[1]} bounces={false}>
+      <ScrollView bounces={false}>
         <LogoView />
-        <TextHeader>Login to your account</TextHeader>
+        <TextHeader>Log in to your Account</TextHeader>
         <FormInput
           value={email}
           onChangeText={setEmail}
@@ -50,18 +62,29 @@ const Login = ({navigation}) => {
           keyboardType={'email-address'}
           textContentType={'emailAddress'}
           autoCapitalize={'none'}
-          errorMessage={errors.email}
+          errorMessage={errors?.email}
+          returnKeyType={'next'}
+          onSubmitEditing={() => {
+            passwordRef.current.focus();
+          }}
+          blurOnSubmit={false}
         />
         <FormInput
+          type={'password'}
           value={password}
           onChangeText={setPassword}
           placeholder={'Password'}
           textContentType={'none'}
-          password={true}
-          errorMessage={errors.password}
+          errorMessage={errors?.password}
+          onSubmitEditing={() => login()}
+          ref={passwordRef}
         />
         <View style={style.forgotPasswordButtonContainer}>
-          <Link>Forgot Password?</Link>
+          <Link
+            onPress={() => console.log('Forgot Password')}
+            textStyle={style.forgotPasswordText}>
+            Forgot Password?
+          </Link>
         </View>
         <View style={globalStyles.registrationButtonContainer}>
           <Button onPress={() => login()}>Login</Button>
