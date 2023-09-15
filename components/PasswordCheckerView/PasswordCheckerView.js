@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import style from './PasswordCheckerStyles';
 import CriteriaRow from '../CriteriaRow/CriteriaRow';
 
-const CRITERIA_SIZE = 5;
+const REQUIRED_SIZE = 4;
 
 const PasswordCheckerView = ({password, setIsPasswordValid}) => {
   const criteria = useMemo(() => {
@@ -21,7 +21,7 @@ const PasswordCheckerView = ({password, setIsPasswordValid}) => {
   const criteriaMetCount = Object.values(criteria).filter(Boolean).length;
 
   useEffect(() => {
-    setIsPasswordValid(criteriaMetCount === CRITERIA_SIZE);
+    setIsPasswordValid(criteriaMetCount >= REQUIRED_SIZE);
   }, [criteriaMetCount, setIsPasswordValid]);
 
   return (
