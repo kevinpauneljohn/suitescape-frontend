@@ -75,9 +75,11 @@ const SignUp = ({navigation}) => {
         password: password,
         password_confirmation: confirmPassword,
       });
-      handleApiResponse(response, setErrors, () =>
-        navigation.replace(Routes.BottomTabs),
-      );
+      handleApiResponse({
+        response,
+        onError: setErrors,
+        onSuccess: () => navigation.replace(Routes.Login),
+      });
     } catch (err) {
       handleApiError(err, setErrors);
     }
