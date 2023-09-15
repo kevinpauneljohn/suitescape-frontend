@@ -1,11 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
-  container: {
+  inputContainer: {
     marginHorizontal: 20,
+    marginBottom: 12,
   },
-  errorText: {
-    marginBottom: 4,
+  datePickerContainer: {
+    paddingRight: 20,
+    paddingBottom: 20,
   },
 });
 
