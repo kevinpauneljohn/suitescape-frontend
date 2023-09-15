@@ -74,6 +74,9 @@ const Slider = () => {
         onScroll={e => {
           const offset = e.nativeEvent.contentOffset.x;
           const newIndex = Math.round(offset / width);
+          if (newIndex === index) {
+            return;
+          }
           setIndex(newIndex);
         }}
       />
