@@ -12,9 +12,9 @@ const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
   const nextScreen = () => {
     if (onboarding) {
       settingsStorage.setBool('skipOnboarding', true);
-      navigation.replace(register ? Routes.SignUp : Routes.Login);
+      navigation.replace(register ? Routes.SIGNUP : Routes.LOGIN);
     } else {
-      navigation.navigate(register ? Routes.SignUp : Routes.Login);
+      navigation.navigate(register ? Routes.SIGNUP : Routes.LOGIN);
     }
   };
 

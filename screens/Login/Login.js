@@ -45,7 +45,7 @@ const Login = ({navigation}) => {
       handleApiResponse({
         response,
         onError: setErrors,
-        onSuccess: () => navigation.replace(Routes.BottomTabs),
+        onSuccess: () => navigation.replace(Routes.BOTTOM_TABS),
       });
     } catch (err) {
       handleApiError(err, setErrors);

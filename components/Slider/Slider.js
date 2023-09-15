@@ -28,7 +28,7 @@ const Slider = () => {
   const handleNextButtonClick = () => {
     if (endReached) {
       settingsStorage.setBool('skipOnboarding', true);
-      navigation.replace(Routes.SignUp);
+      navigation.replace(Routes.SIGNUP);
       return;
     }
     flatListRef.current.scrollToIndex({index: index + 1, animated: true});

@@ -11,10 +11,10 @@ const Tabs = createBottomTabNavigator();
 const renderTabIcons = (color, size, route) => {
   let iconName;
   switch (route.name) {
-    case Routes.Home:
+    case Routes.HOME:
       iconName = 'home';
       break;
-    case Routes.Messages:
+    case Routes.MESSAGES:
       iconName = 'chat';
       break;
     default:
@@ -30,15 +30,15 @@ const BottomTabs = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors.blue,
-        tabBarInactiveTintColor: 'white',
+        tabBarInactiveTintColor: 'black',
         tabBarStyle: {
-          backgroundColor: 'black',
+          backgroundColor: 'white',
           borderTopWidth: 0,
         },
         tabBarIcon: ({color, size}) => renderTabIcons(color, size, route),
       })}>
-      <Tabs.Screen name={Routes.Home} component={Home} />
-      <Tabs.Screen name={Routes.Messages} component={Messages} />
+      <Tabs.Screen name={Routes.HOME} component={Home} />
+      <Tabs.Screen name={Routes.MESSAGES} component={Messages} />
     </Tabs.Navigator>
   );
 };

@@ -20,7 +20,7 @@ const SliderHeader = ({index, onPrevButtonClick, showSkipButton = false}) => {
           <SkipButton
             onPress={() => {
               settingsStorage.setBool('skipOnboarding', true);
-              navigation.replace(Routes.SignUp);
+              navigation.replace(Routes.SIGNUP);
             }}
           />
         )}
@@ -29,7 +29,7 @@ const SliderHeader = ({index, onPrevButtonClick, showSkipButton = false}) => {
             <Link
               onPress={() => {
                 settingsStorage.setBool('skipOnboarding', true);
-                navigation.replace(Routes.Login);
+                navigation.replace(Routes.LOGIN);
               }}>
               Sign In
             </Link>

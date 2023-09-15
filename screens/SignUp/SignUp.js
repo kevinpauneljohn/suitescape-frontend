@@ -78,7 +78,7 @@ const SignUp = ({navigation}) => {
       handleApiResponse({
         response,
         onError: setErrors,
-        onSuccess: () => navigation.replace(Routes.Login),
+        onSuccess: () => navigation.replace(Routes.LOGIN),
       });
     } catch (err) {
       handleApiError(err, setErrors);
