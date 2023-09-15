@@ -4,7 +4,7 @@ import {Routes} from './Routes';
 import Onboarding from '../screens/Onboarding/Onboarding';
 import Login from '../screens/Login/Login';
 import SignUp from '../screens/SignUp/SignUp';
-import BottomTabs from './BottomTabs';
+import BottomTabs from './BottomTabs/BottomTabs';
 
 const Stack = createNativeStackNavigator();
 
