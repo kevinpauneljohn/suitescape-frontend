@@ -20,7 +20,7 @@ const VideoItem = ({index, item, isPaused, togglePause, width, height}) => {
       )}
       <Video
         source={item.url}
-        resizeMode={'cover'}
+        resizeMode={'contain'}
         paused={paused}
         loop={true}
         onError={e => console.log(e)}
