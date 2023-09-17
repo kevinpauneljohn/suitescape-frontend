@@ -12,7 +12,7 @@ const style = StyleSheet.create({
     zIndex: 1,
   },
   pauseButton: {
-    opacity: 0.8,
+    opacity: 0.6,
   },
 });
 
