@@ -71,7 +71,11 @@ const Home = () => {
 
   return (
     <View style={style.mainContainer}>
-      <StatusBar translucent backgroundColor="transparent" />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle={'light-content'}
+      />
       <FlatList
         data={videos}
         keyExtractor={item => item.id}
