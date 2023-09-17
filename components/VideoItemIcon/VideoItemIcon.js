@@ -1,12 +1,23 @@
 import React, {memo} from 'react';
-import {Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import style from '../VideoItemIconView/VideoItemIconViewStyles';
 
-const VideoItemIcon = ({Component, name, size, color, label}) => (
-  <View style={style.iconContainer}>
-    <Component name={name} size={size} color={color} />
-    <Text style={style.iconText}>{label}</Text>
-  </View>
-);
+const VideoItemIcon = ({
+  IconComponent,
+  onPress,
+  label,
+  name,
+  color = 'white',
+  size = 30,
+}) => {
+  return (
+    <Pressable onPress={onPress}>
+      <View style={style.iconContainer}>
+        <IconComponent name={name} color={color} size={size} />
+        <Text style={style.iconText}>{label}</Text>
+      </View>
+    </Pressable>
+  );
+};
 
 export default memo(VideoItemIcon);
