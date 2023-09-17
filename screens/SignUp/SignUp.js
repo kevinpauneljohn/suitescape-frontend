@@ -77,11 +77,11 @@ const SignUp = ({navigation}) => {
       });
       handleApiResponse({
         response,
-        onError: setErrors,
+        onError: e => setErrors(e.errors),
         onSuccess: () => navigation.replace(Routes.LOGIN),
       });
     } catch (err) {
-      handleApiError(err, setErrors);
+      handleApiError(err, e => setErrors(e.errors));
     }
   };
 

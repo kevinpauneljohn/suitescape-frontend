@@ -44,11 +44,11 @@ const Login = ({navigation}) => {
       const response = await SuitescapeAPI.post('/login', {email, password});
       handleApiResponse({
         response,
-        onError: setErrors,
+        onError: e => setErrors(e.errors),
         onSuccess: () => navigation.replace(Routes.BOTTOM_TABS),
       });
     } catch (err) {
-      handleApiError(err, setErrors);
+      handleApiError(err, e => setErrors(e.errors));
     }
   };
 
