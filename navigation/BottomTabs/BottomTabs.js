@@ -12,13 +12,13 @@ import style from './BottomTabsStyles';
 
 const Tabs = createBottomTabNavigator();
 
-export const tabBarStyle = {
+const tabBarStyle = {
   backgroundColor: 'white',
   minHeight: 55,
   borderTopWidth: 0,
 };
 
-export const bottomTabOptions = {
+const bottomTabOptions = {
   headerShown: false,
   tabBarShowLabel: false,
   tabBarActiveTintColor: 'black',
@@ -72,8 +72,19 @@ const BottomTabs = () => {
         ...bottomTabOptions,
         tabBarIcon: props => renderTabIcons(route, props),
       })}>
-      <Tabs.Screen name={Routes.HOME} component={Home} />
-
+      <Tabs.Screen
+        name={Routes.HOME}
+        component={Home}
+        options={{
+          ...bottomTabOptions,
+          tabBarActiveTintColor: 'white',
+          tabBarInactiveTintColor: 'white',
+          tabBarStyle: {
+            ...tabBarStyle,
+            backgroundColor: 'black',
+          },
+        }}
+      />
       {/* Temporary tab group for showing header */}
       <Tabs.Group screenOptions={{headerShown: true}}>
         <Tabs.Screen name={Routes.MESSAGES} component={Messages} />
