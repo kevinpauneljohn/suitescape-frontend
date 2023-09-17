@@ -64,7 +64,7 @@ const VideoItem = ({
       </Pressable>
       <VideoItemDetails
         name={'DreamHome'}
-        stars={4}
+        rating={4.7}
         location={'Baguio City, Philippines'}
         price={'3000'}
       />
