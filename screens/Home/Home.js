@@ -11,53 +11,21 @@ import VideoItem from '../../components/VideoItem/VideoItem';
 import style from './HomeStyles';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import useFetchVideos from '../../hooks/useFetchVideos';
-import {
-  bottomTabOptions,
-  tabBarStyle,
-} from '../../navigation/BottomTabs/BottomTabs';
 
 const VIEWABILITY_CONFIG = {
   // Adjust this if onViewableItemsChanged is not working properly
   itemVisiblePercentThreshold: 80,
 };
 
-const Home = ({navigation}) => {
+const Home = () => {
   const {videos, isLoading, isRefreshing, fetchVideos, resetVideos} =
     useFetchVideos();
   const {width, height} = useWindowDimensions();
+  const bottomTabHeight = useBottomTabBarHeight();
 
   const [index, setIndex] = useState(null);
   const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
   const [isClickPaused, setIsClickPaused] = useState(false);
-
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('light-content', true);
-
-      navigation.setOptions({
-        ...bottomTabOptions,
-        tabBarActiveTintColor: 'white',
-        tabBarInactiveTintColor: 'white',
-        tabBarStyle: {
-          ...tabBarStyle,
-          backgroundColor: 'black',
-        },
-      });
-
-      return () => {
-        StatusBar.setBarStyle('dark-content', true);
-        navigation.setOptions({
-          ...bottomTabOptions,
-          tabBarActiveTintColor: 'black',
-          tabBarInactiveTintColor: 'black',
-          tabBarStyle: {
-            ...tabBarStyle,
-            backgroundColor: 'white',
-          },
-        });
-      };
-    }, [navigation]),
-  );
 
   useFocusEffect(
     useCallback(() => {
@@ -90,11 +58,11 @@ const Home = ({navigation}) => {
 
   const onRefresh = () => {
     resetVideos();
-    fetchVideos(null);
+    fetchVideos(null).catch(() => {});
   };
 
   const onEndReached = () => {
-    fetchVideos();
+    fetchVideos().catch(() => {});
   };
 
   const onMomentumScrollBegin = () => {
@@ -103,6 +71,7 @@ const Home = ({navigation}) => {
 
   return (
     <View style={style.mainContainer}>
+      <StatusBar translucent backgroundColor="transparent" />
       <FlatList
         data={videos}
         keyExtractor={item => item.id}
