@@ -1,46 +1,82 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {FlatList, StatusBar, useWindowDimensions, View} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  StatusBar,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import VideoItem from '../../components/VideoItem/VideoItem';
 import style from './HomeStyles';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import useFetchVideos from '../../hooks/useFetchVideos';
+import {
+  bottomTabOptions,
+  tabBarStyle,
+} from '../../navigation/BottomTabs/BottomTabs';
 
 const VIEWABILITY_CONFIG = {
-  itemVisiblePercentThreshold: 90,
+  // Adjust this if onViewableItemsChanged is not working properly
+  itemVisiblePercentThreshold: 80,
 };
 
-const Home = () => {
-  const videos = Array(5)
-    .fill({
-      title: 'Sample',
-      url: {
-        uri: 'https://assets.mixkit.co/videos/download/mixkit-avenue-with-trees-buildings-and-fast-cars-at-dusk-34563.mp4',
-      },
-    })
-    .map((item, id) => ({...item, id: id + 1}));
-
-  const [index, setIndex] = useState(0);
-  const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
-  const [isPaused, setIsPaused] = useState(false);
-
+const Home = ({navigation}) => {
+  const {videos, isLoading, isRefreshing, fetchVideos, resetVideos} =
+    useFetchVideos();
   const {width, height} = useWindowDimensions();
+  const bottomTabHeight = useBottomTabBarHeight();
+
+  const [index, setIndex] = useState(null);
+  const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
+  const [isClickPaused, setIsClickPaused] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle('light-content', true);
 
-      if (lastPlayedIndex !== null) {
+      navigation.setOptions({
+        ...bottomTabOptions,
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: 'white',
+        tabBarStyle: {
+          ...tabBarStyle,
+          backgroundColor: 'black',
+        },
+      });
+
+      return () => {
+        StatusBar.setBarStyle('dark-content', true);
+        navigation.setOptions({
+          ...bottomTabOptions,
+          tabBarActiveTintColor: 'black',
+          tabBarInactiveTintColor: 'black',
+          tabBarStyle: {
+            ...tabBarStyle,
+            backgroundColor: 'white',
+          },
+        });
+      };
+    }, [navigation]),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (index === null && videos[0]) {
+        setIndex(videos[0]?.id);
+      } else if (lastPlayedIndex !== null) {
         setIndex(lastPlayedIndex);
       }
       return () => {
         setIndex(null);
       };
-    }, [lastPlayedIndex]),
+    }, [lastPlayedIndex, videos]),
   );
 
   const handleViewableItemsChanged = useCallback(({viewableItems}) => {
     const firstViewableItem = viewableItems[0];
     if (firstViewableItem?.isViewable) {
-      const newIndex = firstViewableItem.item.id - 1;
+      const newIndex = firstViewableItem.item.id;
       setLastPlayedIndex(newIndex);
       setIndex(newIndex);
     }
@@ -53,26 +89,48 @@ const Home = () => {
     },
   ]);
 
+  const onRefresh = () => {
+    resetVideos();
+    fetchVideos(null);
+  };
+
+  const onEndReached = () => {
+    fetchVideos();
+  };
+
+  const onMomentumScrollBegin = () => {
+    setIsClickPaused(false);
+  };
+
   return (
     <View style={style.mainContainer}>
       <FlatList
         data={videos}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         renderItem={({item}) => (
           <VideoItem
-            index={index}
             item={item}
-            isPaused={isPaused}
-            togglePause={() => setIsPaused(prevState => !prevState)}
+            notInFocus={index === null || index !== item.id}
+            isClickPaused={isClickPaused}
+            setIsClickPaused={setIsClickPaused}
             width={width}
-            height={height}
+            height={height - bottomTabHeight}
           />
         )}
         showsVerticalScrollIndicator={false}
-        snapToInterval={height}
+        snapToInterval={height - bottomTabHeight}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
-        onMomentumScrollBegin={() => setIsPaused(false)}
+        refreshControl={
+          <RefreshControl
+            tintColor={'white'}
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+          />
+        }
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.6}
+        onMomentumScrollBegin={onMomentumScrollBegin}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
     </View>
