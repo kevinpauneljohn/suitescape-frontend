@@ -25,7 +25,6 @@ const Home = ({navigation}) => {
   const {videos, isLoading, isRefreshing, fetchVideos, resetVideos} =
     useFetchVideos();
   const {width, height} = useWindowDimensions();
-  const bottomTabHeight = useBottomTabBarHeight();
 
   const [index, setIndex] = useState(null);
   const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
