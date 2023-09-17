@@ -9,15 +9,30 @@ const style = StyleSheet.create({
   text: {
     fontFamily: 'Roboto',
     color: 'white',
+    marginBottom: 5,
   },
   bold: {
     fontWeight: 'bold',
   },
-  smallText: {
+  locationText: {
     fontSize: 10,
   },
-  largeText: {
+  priceText: {
     fontSize: 14,
+  },
+  ratingText: {
+    fontSize: 12,
+    marginLeft: 5,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  starRatingContainer: {
+    marginBottom: 5,
+  },
+  starRating: {
+    marginHorizontal: 1,
   },
 });
 
