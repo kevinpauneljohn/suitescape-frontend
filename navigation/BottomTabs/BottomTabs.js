@@ -2,7 +2,6 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Routes} from '../Routes';
 import Home from '../../screens/Home/Home';
-import {Colors} from '../../assets/Colors';
 import Icon from 'react-native-vector-icons/Entypo';
 import Messages from '../../screens/Messages/Messages';
 import {View} from 'react-native';
@@ -12,6 +11,20 @@ import Profile from '../../screens/Profile/Profile';
 import style from './BottomTabsStyles';
 
 const Tabs = createBottomTabNavigator();
+
+export const tabBarStyle = {
+  backgroundColor: 'white',
+  minHeight: 55,
+  borderTopWidth: 0,
+};
+
+export const bottomTabOptions = {
+  headerShown: false,
+  tabBarShowLabel: false,
+  tabBarActiveTintColor: 'black',
+  tabBarInactiveTintColor: 'black',
+  tabBarStyle,
+};
 
 const renderTabIcons = (route, {focused, color, size}) => {
   let iconName;
@@ -56,15 +69,7 @@ const BottomTabs = () => {
   return (
     <Tabs.Navigator
       screenOptions={({route}) => ({
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: Colors.blue,
-        tabBarInactiveTintColor: 'black',
-        tabBarStyle: {
-          backgroundColor: 'white',
-          height: 90,
-          borderTopWidth: 0,
-        },
+        ...bottomTabOptions,
         tabBarIcon: props => renderTabIcons(route, props),
       })}>
       <Tabs.Screen name={Routes.HOME} component={Home} />
