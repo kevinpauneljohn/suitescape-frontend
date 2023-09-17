@@ -48,7 +48,7 @@ const useFetchVideos = () => {
   };
 
   useEffect(() => {
-    fetchVideos();
+    fetchVideos().catch(() => {});
   }, []);
 
   return {videos, isLoading, isRefreshing, fetchVideos, resetVideos};
