@@ -31,9 +31,7 @@ const useFetchVideos = () => {
         response,
         onError: e => Alert.alert('Error', e.message),
         onSuccess: res => {
-          if (videos.length === 0) {
-            setVideos(res.data);
-          } else if (nextCursor) {
+          if (nextCursor || videos.length === 0) {
             setVideos(prevVideos => [...prevVideos, ...res.data]);
           }
           setNextCursor(res.next_cursor);
