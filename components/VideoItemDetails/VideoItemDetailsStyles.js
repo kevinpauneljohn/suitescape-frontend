@@ -11,18 +11,19 @@ const style = StyleSheet.create({
     color: 'white',
     marginBottom: 5,
   },
-  bold: {
+  nameText: {
     fontWeight: 'bold',
+    fontSize: 18,
+  },
+  ratingText: {
+    fontSize: 12,
+    marginLeft: 5,
   },
   locationText: {
     fontSize: 10,
   },
   priceText: {
-    fontSize: 14,
-  },
-  ratingText: {
-    fontSize: 12,
-    marginLeft: 5,
+    fontSize: 16,
   },
   ratingContainer: {
     flexDirection: 'row',

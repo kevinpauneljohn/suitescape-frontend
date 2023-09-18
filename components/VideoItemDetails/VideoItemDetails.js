@@ -6,7 +6,7 @@ import StarRating from 'react-native-star-rating-widget';
 const VideoItemDetails = ({name, location, rating, price}) => {
   return (
     <View style={style.container}>
-      <Text style={{...style.text, ...style.bold}}>{name}</Text>
+      <Text style={{...style.text, ...style.nameText}}>{name}</Text>
       <View style={style.ratingContainer}>
         <View style={style.starRatingContainer}>
           <StarRating
