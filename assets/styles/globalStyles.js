@@ -7,4 +7,9 @@ const globalStyles = StyleSheet.create({
   themeColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
 });
 
+export const pressedOpacity = (pressed, opacity = 0.5) =>
+  pressed ? {opacity} : {};
+export const disabledOpacity = (disabled, opacity = 0.6) =>
+  disabled ? {opacity} : {};
+
 export default globalStyles;
