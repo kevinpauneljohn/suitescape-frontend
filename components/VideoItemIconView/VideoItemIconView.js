@@ -35,7 +35,7 @@ const VideoItemIconView = ({likes}) => {
       IconComponent: Icon,
       name: 'bookmark',
       label: 'Save',
-      color: isSaved ? 'yellow' : 'white',
+      color: isSaved ? 'gold' : 'white',
       onPress: () => setIsSaved(prevState => !prevState),
     },
     {
