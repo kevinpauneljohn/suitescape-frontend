@@ -1,6 +1,7 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {
   FlatList,
+  Pressable,
   RefreshControl,
   StatusBar,
   useWindowDimensions,
@@ -11,6 +12,10 @@ import VideoItem from '../../components/VideoItem/VideoItem';
 import style from './HomeStyles';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import useFetchVideos from '../../hooks/useFetchVideos';
+import Icon from 'react-native-vector-icons/Ionicons';
+import NotificationBadge from '../../components/NotificationBadge/NotificationBadge';
+import {pressedOpacity} from '../../assets/styles/globalStyles';
+import HeaderIcon from '../../components/HeaderIcon/HeaderIcon';
 
 const VIEWABILITY_CONFIG = {
   // Adjust this if onViewableItemsChanged is not working properly
@@ -26,9 +31,12 @@ const Home = () => {
   const [index, setIndex] = useState(null);
   const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
   const [isClickPaused, setIsClickPaused] = useState(false);
+  const [isFocused, setIsFocused] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
+      setIsFocused(true);
+
       if (index === null && videos[0]) {
         setIndex(videos[0]?.id);
       } else if (lastPlayedIndex !== null) {
@@ -36,6 +44,7 @@ const Home = () => {
       }
       return () => {
         setIndex(null);
+        setIsFocused(false);
       };
     }, [lastPlayedIndex, videos]),
   );
@@ -74,8 +83,21 @@ const Home = () => {
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle={'light-content'}
+        barStyle={isFocused ? 'light-content' : 'dark-content'}
       />
+      <HeaderIcon>
+        <Pressable
+          onPress={() => console.log('Options')}
+          style={({pressed}) => pressedOpacity(pressed)}>
+          <Icon name={'options'} size={30} color={'white'} />
+        </Pressable>
+      </HeaderIcon>
+      <HeaderIcon right={true}>
+        <NotificationBadge
+          size={1}
+          onPress={() => console.log('Notifications')}
+        />
+      </HeaderIcon>
       <FlatList
         data={videos}
         keyExtractor={item => item.id}
