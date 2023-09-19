@@ -5,6 +5,7 @@ const style = StyleSheet.create({
     position: 'absolute',
     left: 15,
     bottom: 30,
+    maxWidth: 200,
   },
   text: {
     fontFamily: 'Roboto',
