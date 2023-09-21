@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {Pressable, Text} from 'react-native';
 import {pressedOpacity} from '../../assets/styles/globalStyles';
 import style from './VideoItemIconStyles';
 
