@@ -14,7 +14,7 @@ const Tabs = createBottomTabNavigator();
 
 const tabBarStyle = {
   backgroundColor: 'white',
-  minHeight: 55,
+  minHeight: 60,
   borderTopWidth: 0,
 };
 
