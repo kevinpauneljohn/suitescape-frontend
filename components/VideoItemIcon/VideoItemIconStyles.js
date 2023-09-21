@@ -1,12 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
-  mainContainer: {
-    position: 'absolute',
-    width: 50,
-    right: 6,
-    bottom: 20,
+  container: {
+    marginBottom: 20,
     alignItems: 'center',
+  },
+  text: {
+    color: 'white',
+    fontSize: 10,
+    marginTop: 3,
   },
 });
 
