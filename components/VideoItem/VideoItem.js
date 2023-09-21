@@ -8,6 +8,7 @@ import {userStorage} from '../../storage/userStorage';
 import useAppState from '../../hooks/useAppState';
 import VideoItemDetails from '../VideoItemDetails/VideoItemDetails';
 import VideoItemIconView from '../VideoItemIconView/VideoItemIconView';
+import convertToProxyURL from 'react-native-video-cache-control';
 
 const VideoItem = ({
   item,
@@ -21,6 +22,11 @@ const VideoItem = ({
   const appState = useAppState();
   const inBackground = !!appState.match(/inactive|background/);
   const paused = isClickPaused || inBackground || notInFocus;
+
+  const {listing} = item;
+  const {name, location, ratings} = item.listing;
+  const {price} = listing.room_categories[0] || 0;
+  const flooredPrice = Math.floor(price);
 
   const token = userStorage.getString('token');
 
@@ -50,10 +56,12 @@ const VideoItem = ({
         <Video
           ref={videoRef}
           source={{
-            uri: `${baseURL}/videos/${item.id}`,
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            uri: convertToProxyURL({
+              url: `${baseURL}/videos/${item.id}`,
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }),
           }}
           resizeMode={'cover'}
           paused={paused}
@@ -63,10 +71,10 @@ const VideoItem = ({
         />
       </Pressable>
       <VideoItemDetails
-        name={'DreamHome'}
-        rating={4.7}
-        location={'Baguio City, Philippines'}
-        price={'3000'}
+        name={name}
+        rating={ratings}
+        location={location}
+        price={flooredPrice}
       />
       <VideoItemIconView likes={'10.1k'} />
     </View>
