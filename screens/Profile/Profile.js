@@ -5,8 +5,13 @@ import {useUser} from '../../storage/userStorage';
 import {handleApiError, handleApiResponse} from '../../utilities/apiHelpers';
 import {Alert} from 'react-native';
 import {Routes} from '../../navigation/Routes';
+import {useSettings} from '../../storage/settingsStorage';
 
 const Profile = ({navigation}) => {
+  const [_skipOnboarding, setSkipOnboarding] = useSettings(
+    'skipOnboarding',
+    false,
+  );
   const [token, setToken] = useUser('token', '');
 
   const logout = async () => {
@@ -22,14 +27,17 @@ const Profile = ({navigation}) => {
       );
       handleApiResponse({
         response,
-        onError: e => Alert.alert('Error', e.message),
         onSuccess: () => {
           setToken('');
-          navigation.replace(Routes.LOGIN);
+          setSkipOnboarding(false);
+          navigation.replace(Routes.ONBOARDING);
         },
       });
     } catch (err) {
-      handleApiError(err, e => Alert.alert('Error', e.message));
+      handleApiError(err, e => {
+        Alert.alert('Error', e.message);
+        navigation.replace(Routes.ONBOARDING);
+      });
     }
   };
 
