@@ -9,10 +9,6 @@ const useFetchVideos = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const resetVideos = () => {
-    setVideos([]);
-  };
-
   const fetchVideos = async cursorOverride => {
     if (isLoading) {
       return;
@@ -29,11 +25,25 @@ const useFetchVideos = () => {
       );
       handleApiResponse({
         response,
-        onError: e => Alert.alert('Error', e.message),
         onSuccess: res => {
-          if (nextCursor || videos.length === 0) {
-            setVideos(prevVideos => [...prevVideos, ...res.data]);
+          let newVideos = res.data;
+
+          if (cursorOverride !== undefined) {
+            setVideos(newVideos);
+            setNextCursor(res.next_cursor);
+            return;
           }
+
+          if (videos.length !== 0) {
+            const existingVideoIds = new Set(videos.map(v => v.id));
+            newVideos = newVideos.filter(
+              video => !existingVideoIds.has(video.id),
+            );
+          }
+          if (newVideos.length === 0) {
+            return;
+          }
+          setVideos(prevVideos => [...prevVideos, ...newVideos]);
           setNextCursor(res.next_cursor);
         },
       });
@@ -49,7 +59,7 @@ const useFetchVideos = () => {
     fetchVideos().catch(() => {});
   }, []);
 
-  return {videos, isLoading, isRefreshing, fetchVideos, resetVideos};
+  return {videos, isLoading, isRefreshing, fetchVideos};
 };
 
 export default useFetchVideos;

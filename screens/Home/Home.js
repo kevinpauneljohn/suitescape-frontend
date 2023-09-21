@@ -23,8 +23,7 @@ const VIEWABILITY_CONFIG = {
 };
 
 const Home = () => {
-  const {videos, isLoading, isRefreshing, fetchVideos, resetVideos} =
-    useFetchVideos();
+  const {videos, isLoading, isRefreshing, fetchVideos} = useFetchVideos();
   const {width, height} = useWindowDimensions();
   const bottomTabHeight = useBottomTabBarHeight();
 
@@ -66,7 +65,6 @@ const Home = () => {
   ]);
 
   const onRefresh = () => {
-    resetVideos();
     fetchVideos(null).catch(() => {});
   };
 
@@ -123,7 +121,7 @@ const Home = () => {
           />
         }
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.6}
+        onEndReachedThreshold={0.5}
         onMomentumScrollBegin={onMomentumScrollBegin}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
