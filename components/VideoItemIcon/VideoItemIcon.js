@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import {Pressable, Text, View} from 'react-native';
-import style from '../VideoItemIconView/VideoItemIconViewStyles';
 import {pressedOpacity} from '../../assets/styles/globalStyles';
+import style from './VideoItemIconStyles';
 
 const VideoItemIcon = ({
   IconComponent,
@@ -14,11 +14,12 @@ const VideoItemIcon = ({
   return (
     <Pressable
       onPress={onPress}
-      style={({pressed}) => pressedOpacity(pressed, 0.85)}>
-      <View style={style.iconContainer}>
-        <IconComponent name={name} color={color} size={size} />
-        <Text style={style.iconText}>{label}</Text>
-      </View>
+      style={({pressed}) => ({
+        ...style.container,
+        ...pressedOpacity(pressed, 0.8),
+      })}>
+      <IconComponent name={name} color={color} size={size} />
+      <Text style={style.text}>{label}</Text>
     </Pressable>
   );
 };
