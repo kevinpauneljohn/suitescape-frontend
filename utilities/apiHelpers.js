@@ -7,7 +7,7 @@ export const handleApiResponse = ({response, onError, onSuccess}) => {
     onError && onError(response.data);
     return;
   }
-  if (response.data.message) {
+  if (response.data.message && !response.data.token) {
     Alert.alert('Success', response.data.message);
   }
   if (response.data.token) {
