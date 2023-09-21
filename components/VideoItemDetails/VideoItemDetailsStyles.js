@@ -5,7 +5,7 @@ const style = StyleSheet.create({
     position: 'absolute',
     left: 15,
     bottom: 30,
-    maxWidth: 200,
+    maxWidth: 180,
   },
   text: {
     fontFamily: 'Roboto',
@@ -31,7 +31,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   starRatingContainer: {
-    marginBottom: 5,
+    marginBottom: 10,
   },
   starRating: {
     marginHorizontal: 1,
