@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import style from './VideoItemIconViewStyles';
 import VideoItemIcon from '../VideoItemIcon/VideoItemIcon';
 
-const VideoItemIconView = ({likes}) => {
+const VideoItemIconView = ({likes, setShowModal}) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -42,7 +42,7 @@ const VideoItemIconView = ({likes}) => {
       IconComponent: MaterialCommunityIcons,
       name: 'format-list-bulleted-type',
       label: 'Section',
-      onPress: () => console.log('Section'),
+      onPress: () => setShowModal(true),
     },
   ];
 
