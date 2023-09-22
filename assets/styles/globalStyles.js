@@ -1,10 +1,9 @@
-import {Appearance, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const globalStyles = StyleSheet.create({
   registrationButtonContainer: {
     marginTop: 12,
   },
-  themeColor: Appearance.getColorScheme() === 'dark' ? 'white' : 'black',
 });
 
 export const pressedOpacity = (pressed, opacity = 0.5) =>
