@@ -9,6 +9,7 @@ import useAppState from '../../hooks/useAppState';
 import VideoItemDetails from '../VideoItemDetails/VideoItemDetails';
 import VideoItemIconView from '../VideoItemIconView/VideoItemIconView';
 import VideoItemProgressBar from '../VideoItemProgressBar/VideoItemProgressBar';
+import useListing from '../../hooks/useListing';
 
 const VideoItem = ({
   item,
@@ -21,16 +22,13 @@ const VideoItem = ({
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isSeekPaused, setIsSeekPaused] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const videoRef = useRef(null);
+  const listing = useListing(item);
   const appState = useAppState();
+  const videoRef = useRef(null);
   const inBackground = !!appState.match(/inactive|background/);
   const paused = isSeekPaused || isClickPaused || inBackground || notInFocus;
-
-  const {listing} = item;
-  const {name, location, ratings} = item.listing;
-  const {price} = listing.room_categories[0] || 0;
-  const flooredPrice = Math.floor(price);
 
   const token = userStorage.getString('token');
 
@@ -75,18 +73,40 @@ const VideoItem = ({
         />
       </Pressable>
       <VideoItemDetails
-        name={name}
-        rating={ratings}
-        location={location}
-        price={flooredPrice}
+        name={listing.name}
+        rating={listing.avgRating}
+        location={listing.location}
+        price={listing.price}
       />
-      <VideoItemIconView likes={'10.1k'} />
+      <VideoItemIconView likes={listing.likes} setShowModal={setShowModal} />
       <VideoItemProgressBar
         duration={duration}
         progress={progress}
         setIsPaused={setIsSeekPaused}
         videoRef={videoRef}
       />
+
+      {/*<Portal>*/}
+      {/*  <Modal*/}
+      {/*    visible={showModal}*/}
+      {/*    onDismiss={() => setShowModal(false)}*/}
+      {/*    contentContainerStyle={{*/}
+      {/*      backgroundColor: 'white',*/}
+      {/*      position: 'absolute',*/}
+      {/*      bottom: 60,*/}
+      {/*      left: 0,*/}
+      {/*      right: 0,*/}
+      {/*    }}>*/}
+      {/*    <ScrollView*/}
+      {/*      horizontal={true}*/}
+      {/*      contentContainerStyle={{*/}
+      {/*        height: 150,*/}
+      {/*        alignItems: 'center',*/}
+      {/*        marginHorizontal: 20,*/}
+      {/*      }}*/}
+      {/*    />*/}
+      {/*  </Modal>*/}
+      {/*</Portal>*/}
     </View>
   );
 };
