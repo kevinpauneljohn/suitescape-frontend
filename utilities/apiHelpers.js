@@ -2,30 +2,40 @@ import {Alert} from 'react-native';
 import {userStorage} from '../storage/userStorage';
 
 export const handleApiResponse = ({response, onError, onSuccess}) => {
-  if (response.data.errors) {
-    Alert.alert('Error', response.data.message);
-    onError && onError(response.data);
+  const result = response.data;
+
+  if (result.errors) {
+    Alert.alert('Error', result.message);
+    onError && onError(result);
     return;
   }
-  if (response.data.message && !response.data.token) {
-    Alert.alert('Success', response.data.message);
+
+  if (result.token) {
+    userStorage.setString('token', result.token);
   }
-  if (response.data.token) {
-    userStorage.setString('token', response.data.token);
+
+  if (result.message && !result.token) {
+    Alert.alert('Success', result.message);
   }
-  if (response.data.user) {
-    console.log(response.data.user);
+
+  if (result.user) {
+    console.log(result.user);
   }
-  onSuccess && onSuccess(response.data);
-  // console.log(response.data);
+
+  onSuccess && onSuccess(result);
+  // console.log(result);
 };
 
 export const handleApiError = (err, handleErrors) => {
-  if (err.response) {
-    handleErrors && handleErrors(err.response.data);
-    console.log(err.response.data);
-  } else {
-    Alert.alert('Error', err.message);
-    console.log(err.request);
+  const errorResponse = err.response;
+
+  if (errorResponse) {
+    const errors = errorResponse.data;
+    handleErrors && handleErrors(errors);
+    console.log(errors);
+    return;
   }
+
+  Alert.alert('Error', err.message);
+  console.log(err.request);
 };
