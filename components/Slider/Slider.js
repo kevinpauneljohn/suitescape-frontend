@@ -41,6 +41,15 @@ const Slider = () => {
     });
   };
 
+  const onScroll = e => {
+    const offset = e.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(offset / width);
+    if (newIndex === index) {
+      return;
+    }
+    setIndex(newIndex);
+  };
+
   const renderDot = i => (
     <View
       key={i}
@@ -71,20 +80,13 @@ const Slider = () => {
         snapToInterval={width}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
-        onScroll={e => {
-          const offset = e.nativeEvent.contentOffset.x;
-          const newIndex = Math.round(offset / width);
-          if (newIndex === index) {
-            return;
-          }
-          setIndex(newIndex);
-        }}
+        onScroll={onScroll}
       />
       <View style={style.dotContainer}>
         {slides.map((_, i) => renderDot(i))}
       </View>
       <View style={style.nextButtonContainer}>
-        <Button onPress={() => handleNextButtonClick()}>
+        <Button onPress={handleNextButtonClick}>
           {endReached ? 'Get Started' : 'Next'}
         </Button>
       </View>
