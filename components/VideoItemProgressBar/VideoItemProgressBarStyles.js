@@ -25,8 +25,8 @@ const style = StyleSheet.create({
   },
   trackMark: {
     width: 5,
-    height: 7,
-    backgroundColor: 'yellow',
+    height: 6,
+    backgroundColor: 'white',
     borderRadius: 1,
     marginLeft: 1,
     marginRight: 1,
