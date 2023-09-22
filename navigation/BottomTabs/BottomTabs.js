@@ -4,7 +4,7 @@ import {Routes} from '../Routes';
 import Home from '../../screens/Home/Home';
 import Icon from 'react-native-vector-icons/Entypo';
 import Messages from '../../screens/Messages/Messages';
-import {View} from 'react-native';
+import {useColorScheme, View} from 'react-native';
 import Search from '../../screens/Search/Search';
 import Bookings from '../../screens/Bookings/Bookings';
 import Profile from '../../screens/Profile/Profile';
@@ -24,6 +24,16 @@ const bottomTabOptions = {
   tabBarActiveTintColor: 'black',
   tabBarInactiveTintColor: 'black',
   tabBarStyle,
+};
+
+const darkThemeTabOptions = {
+  ...bottomTabOptions,
+  tabBarActiveTintColor: 'white',
+  tabBarInactiveTintColor: 'white',
+  tabBarStyle: {
+    ...tabBarStyle,
+    backgroundColor: 'black',
+  },
 };
 
 const renderTabIcons = (route, {focused, color, size}) => {
@@ -66,24 +76,17 @@ const renderTabIcons = (route, {focused, color, size}) => {
 };
 
 const BottomTabs = () => {
+  const colorScheme = useColorScheme();
   return (
     <Tabs.Navigator
       screenOptions={({route}) => ({
-        ...bottomTabOptions,
+        ...(colorScheme === 'dark' ? darkThemeTabOptions : bottomTabOptions),
         tabBarIcon: props => renderTabIcons(route, props),
       })}>
       <Tabs.Screen
         name={Routes.HOME}
         component={Home}
-        options={{
-          ...bottomTabOptions,
-          tabBarActiveTintColor: 'white',
-          tabBarInactiveTintColor: 'white',
-          tabBarStyle: {
-            ...tabBarStyle,
-            backgroundColor: 'black',
-          },
-        }}
+        options={darkThemeTabOptions}
       />
       {/* Temporary tab group for showing header */}
       <Tabs.Group screenOptions={{headerShown: true}}>
