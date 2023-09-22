@@ -25,6 +25,7 @@ const VideoItem = ({
   const [showModal, setShowModal] = useState(false);
 
   const listing = useListing(item);
+
   const appState = useAppState();
   const videoRef = useRef(null);
   const inBackground = !!appState.match(/inactive|background/);
