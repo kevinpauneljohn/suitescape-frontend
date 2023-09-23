@@ -31,6 +31,7 @@ const Home = () => {
   const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
   const [isClickPaused, setIsClickPaused] = useState(false);
   const [isFocused, setIsFocused] = useState(true);
+  const [isScrollEnabled, setIsScrollEnabled] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -99,12 +100,14 @@ const Home = () => {
       <FlatList
         data={videos}
         keyExtractor={item => item.id}
+        scrollEnabled={isScrollEnabled}
         renderItem={({item}) => (
           <VideoItem
             item={item}
             notInFocus={index === null || index !== item.id}
             isClickPaused={isClickPaused}
             setIsClickPaused={setIsClickPaused}
+            setIsScrollEnabled={setIsScrollEnabled}
             width={width}
             height={height - bottomTabHeight}
           />

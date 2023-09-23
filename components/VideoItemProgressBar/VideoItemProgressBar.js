@@ -3,11 +3,17 @@ import {View} from 'react-native';
 import {Slider} from '@miblanchard/react-native-slider';
 import style from './VideoItemProgressBarStyles';
 
-const VideoItemProgressBar = ({progress, duration, setIsPaused, videoRef}) => {
+const VideoItemProgressBar = ({
+  progress,
+  duration,
+  setIsPaused,
+  setIsScrollEnabled,
+  videoRef,
+}) => {
   const [isSeeking, setIsSeeking] = useState(false);
   const timeoutRef = useRef(null);
 
-  const handleOnSeek = () => {
+  const onSeek = () => {
     setIsSeeking(true);
 
     if (timeoutRef.current) {
@@ -20,10 +26,12 @@ const VideoItemProgressBar = ({progress, duration, setIsPaused, videoRef}) => {
   };
 
   const onSlidingStart = () => {
+    setIsScrollEnabled(false);
     setIsPaused(true);
   };
 
   const onSlidingComplete = () => {
+    setIsScrollEnabled(true);
     setIsPaused(false);
   };
 
@@ -32,7 +40,7 @@ const VideoItemProgressBar = ({progress, duration, setIsPaused, videoRef}) => {
       <Slider
         value={progress}
         onValueChange={val => {
-          handleOnSeek();
+          onSeek();
           videoRef.current.seek(val[0]);
         }}
         onSlidingStart={onSlidingStart}

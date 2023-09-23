@@ -16,6 +16,7 @@ const VideoItem = ({
   notInFocus,
   isClickPaused,
   setIsClickPaused,
+  setIsScrollEnabled,
   width,
   height,
 }) => {
@@ -84,6 +85,7 @@ const VideoItem = ({
         duration={duration}
         progress={progress}
         setIsPaused={setIsSeekPaused}
+        setIsScrollEnabled={setIsScrollEnabled}
         videoRef={videoRef}
       />
 
