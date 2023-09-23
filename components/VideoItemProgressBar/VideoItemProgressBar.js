@@ -32,8 +32,8 @@ const VideoItemProgressBar = ({progress, duration, setIsPaused, videoRef}) => {
       <Slider
         value={progress}
         onValueChange={val => {
-          handleOnSeek();
           videoRef.current.seek(val[0]);
+          handleOnSeek();
         }}
         onSlidingStart={onSlidingStart}
         onSlidingComplete={onSlidingComplete}
