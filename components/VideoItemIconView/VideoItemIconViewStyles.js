@@ -5,7 +5,7 @@ const style = StyleSheet.create({
     position: 'absolute',
     width: 50,
     right: 6,
-    bottom: 20,
+    bottom: 30,
     alignItems: 'center',
   },
 });
