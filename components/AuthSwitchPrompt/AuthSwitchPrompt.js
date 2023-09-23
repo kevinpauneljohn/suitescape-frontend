@@ -9,12 +9,14 @@ import {settingsStorage} from '../../storage/settingsStorage';
 const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
   const navigation = useNavigation();
 
-  const nextScreen = () => {
+  const handleNextScreen = () => {
+    const nextScreen = register ? Routes.SIGNUP : Routes.LOGIN;
+
     if (onboarding) {
       settingsStorage.setBool('skipOnboarding', true);
-      navigation.replace(register ? Routes.SIGNUP : Routes.LOGIN);
+      navigation.replace(nextScreen);
     } else {
-      navigation.navigate(register ? Routes.SIGNUP : Routes.LOGIN);
+      navigation.navigate(nextScreen);
     }
   };
 
@@ -27,7 +29,7 @@ const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
         }}>
         {register ? "Don't have an account?" : 'Already have an account?'}
       </Text>
-      <Link onPress={nextScreen} textStyle={style.text}>
+      <Link onPress={handleNextScreen} textStyle={style.text}>
         {register ? 'Create Account' : 'Sign In'}
       </Link>
     </View>
