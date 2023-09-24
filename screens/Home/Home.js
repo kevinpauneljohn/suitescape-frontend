@@ -8,9 +8,9 @@ import {
   View,
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import VideoItem from '../../components/VideoItem/VideoItem';
 import style from './HomeStyles';
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import useFetchVideos from '../../hooks/useFetchVideos';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NotificationBadge from '../../components/NotificationBadge/NotificationBadge';
