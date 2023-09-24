@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react';
-import {Alert, View} from 'react-native';
+import {View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Icon from 'react-native-vector-icons/FontAwesome';

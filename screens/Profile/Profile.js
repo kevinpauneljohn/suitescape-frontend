@@ -36,7 +36,7 @@ const Profile = ({navigation}) => {
         },
       });
     } catch (err) {
-      handleApiError(err, e => {
+      handleApiError(err, () => {
         handleLogout();
       });
     }
