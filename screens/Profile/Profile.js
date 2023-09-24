@@ -3,16 +3,17 @@ import {Button} from 'react-native-paper';
 import SuitescapeAPI from '../../services/SuitescapeAPI';
 import {useUser} from '../../storage/userStorage';
 import {handleApiError, handleApiResponse} from '../../utilities/apiHelpers';
-import {Alert} from 'react-native';
 import {Routes} from '../../navigation/Routes';
-import {useSettings} from '../../storage/settingsStorage';
+import {settingsStorage} from '../../storage/settingsStorage';
 
 const Profile = ({navigation}) => {
-  const [_skipOnboarding, setSkipOnboarding] = useSettings(
-    'skipOnboarding',
-    false,
-  );
   const [token, setToken] = useUser('token', '');
+
+  const handleLogout = () => {
+    setToken('');
+    settingsStorage.setBool('skipOnboarding', false);
+    navigation.replace(Routes.ONBOARDING);
+  };
 
   const logout = async () => {
     try {
@@ -27,16 +28,16 @@ const Profile = ({navigation}) => {
       );
       handleApiResponse({
         response,
+        onError: () => {
+          handleLogout();
+        },
         onSuccess: () => {
-          setToken('');
-          setSkipOnboarding(false);
-          navigation.replace(Routes.ONBOARDING);
+          handleLogout();
         },
       });
     } catch (err) {
       handleApiError(err, e => {
-        Alert.alert('Error', e.message);
-        navigation.replace(Routes.ONBOARDING);
+        handleLogout();
       });
     }
   };
