@@ -1,17 +1,31 @@
 const useListing = ({listing}) => {
   const {
     name,
-    average_rating: avgRating,
     location,
     likes,
-    room_categories,
+    saves,
+    views,
+    is_liked: isLiked,
+    is_saved: isSaved,
+    is_viewed: isViewed,
+    average_rating: avgRating,
+    lowest_room_price: lowestRoomPrice,
   } = listing;
 
-  const price = room_categories.length
-    ? Math.floor(room_categories[0].price)
-    : 0;
+  const price = Math.floor(lowestRoomPrice);
 
-  return {name, avgRating, location, price, likes};
+  return {
+    name,
+    location,
+    likes,
+    saves,
+    views,
+    isLiked,
+    isSaved,
+    isViewed,
+    avgRating,
+    price,
+  };
 };
 
 export default useListing;
