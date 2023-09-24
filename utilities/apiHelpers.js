@@ -14,10 +14,6 @@ export const handleApiResponse = ({response, onError, onSuccess}) => {
     userStorage.setString('token', result.token);
   }
 
-  if (result.message && !result.token) {
-    Alert.alert('Success', result.message);
-  }
-
   if (result.user) {
     console.log(result.user);
   }
@@ -29,13 +25,17 @@ export const handleApiResponse = ({response, onError, onSuccess}) => {
 export const handleApiError = (err, handleErrors) => {
   const errorResponse = err.response;
 
-  if (errorResponse) {
-    const errors = errorResponse.data;
-    handleErrors && handleErrors(errors);
-    console.log(errors);
+  if (!errorResponse) {
+    Alert.alert('Error', err.message);
+    console.log(err.request);
     return;
   }
 
-  Alert.alert('Error', err.message);
-  console.log(err.request);
+  const errors = errorResponse.data;
+  handleErrors && handleErrors(errors);
+  console.log(errors);
+
+  if (errorResponse.status === 401) {
+    Alert.alert('Not logged in', errors.message);
+  }
 };
