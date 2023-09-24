@@ -3,13 +3,12 @@ import {Pressable, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
 import style from './VideoItemStyles';
-import {baseURL} from '../../services/SuitescapeAPI';
 import {userStorage} from '../../storage/userStorage';
 import useAppState from '../../hooks/useAppState';
+import useListing from '../../hooks/useListing';
 import VideoItemDetails from '../VideoItemDetails/VideoItemDetails';
 import VideoItemIconView from '../VideoItemIconView/VideoItemIconView';
 import VideoItemProgressBar from '../VideoItemProgressBar/VideoItemProgressBar';
-import useListing from '../../hooks/useListing';
 
 const VideoItem = ({
   item,
@@ -22,17 +21,16 @@ const VideoItem = ({
 }) => {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isSectionShown, setIsSectionShown] = useState(false);
   const [isSeekPaused, setIsSeekPaused] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const videoRef = useRef(null);
 
   const listing = useListing(item);
-
   const appState = useAppState();
-  const videoRef = useRef(null);
-  const inBackground = !!appState.match(/inactive|background/);
-  const paused = isSeekPaused || isClickPaused || inBackground || notInFocus;
 
   const token = userStorage.getString('token');
+  const inBackground = !!appState.match(/inactive|background/);
+  const paused = isSeekPaused || isClickPaused || inBackground || notInFocus;
 
   useEffect(() => {
     if (!isClickPaused && notInFocus) {
@@ -42,6 +40,10 @@ const VideoItem = ({
 
   const togglePause = () => {
     setIsClickPaused(prevState => !prevState);
+  };
+
+  const setShowModal = () => {
+    setIsSectionShown(true);
   };
 
   return (
@@ -60,7 +62,7 @@ const VideoItem = ({
         <Video
           ref={videoRef}
           source={{
-            uri: `${baseURL}/videos/${item.id}`,
+            uri: item.url,
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -80,7 +82,13 @@ const VideoItem = ({
         location={listing.location}
         price={listing.price}
       />
-      <VideoItemIconView likes={listing.likes} setShowModal={setShowModal} />
+      <VideoItemIconView
+        id={item.id}
+        likes={listing.likes}
+        isVideoLiked={listing.isLiked}
+        isVideoSaved={listing.isSaved}
+        setShowModal={setShowModal}
+      />
       <VideoItemProgressBar
         duration={duration}
         progress={progress}
