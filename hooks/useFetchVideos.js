@@ -2,12 +2,15 @@ import {useEffect, useState} from 'react';
 import SuitescapeAPI from '../services/SuitescapeAPI';
 import {handleApiError, handleApiResponse} from '../utilities/apiHelpers';
 import {Alert} from 'react-native';
+import {userStorage} from '../storage/userStorage';
 
 const useFetchVideos = () => {
   const [videos, setVideos] = useState([]);
   const [nextCursor, setNextCursor] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const token = userStorage.getString('token');
 
   const fetchVideos = async cursorOverride => {
     if (isLoading) {
@@ -22,6 +25,11 @@ const useFetchVideos = () => {
       setIsLoading(true);
       const response = await SuitescapeAPI.get(
         `/videos?cursor=${currentCursor}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
       handleApiResponse({
         response,
