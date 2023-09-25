@@ -99,8 +99,9 @@ const Home = () => {
       </HeaderIcon>
       <FlatList
         data={videos}
-        keyExtractor={item => item.id}
         scrollEnabled={isScrollEnabled}
+        windowSize={5}
+        keyExtractor={item => item.id}
         renderItem={({item}) => (
           <VideoItem
             item={item}
@@ -126,6 +127,7 @@ const Home = () => {
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}
         onMomentumScrollBegin={onMomentumScrollBegin}
+        disableIntervalMomentum={true}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
     </View>
