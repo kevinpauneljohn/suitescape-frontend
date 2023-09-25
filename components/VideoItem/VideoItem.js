@@ -6,6 +6,7 @@ import style from './VideoItemStyles';
 import {userStorage} from '../../storage/userStorage';
 import useAppState from '../../hooks/useAppState';
 import useListing from '../../hooks/useListing';
+import {baseURL} from '../../services/SuitescapeAPI';
 import VideoItemDetails from '../VideoItemDetails/VideoItemDetails';
 import VideoItemIconView from '../VideoItemIconView/VideoItemIconView';
 import VideoItemProgressBar from '../VideoItemProgressBar/VideoItemProgressBar';
@@ -62,7 +63,7 @@ const VideoItem = ({
         <Video
           ref={videoRef}
           source={{
-            uri: item.url,
+            uri: `${baseURL}/videos/${item.id}`,
             headers: {
               Authorization: `Bearer ${token}`,
             },
