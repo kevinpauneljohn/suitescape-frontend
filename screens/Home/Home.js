@@ -20,6 +20,9 @@ import HeaderIcon from '../../components/HeaderIcon/HeaderIcon';
 const VIEWABILITY_CONFIG = {
   // Adjust this if onViewableItemsChanged is not working properly
   itemVisiblePercentThreshold: 80,
+
+  // Fixes scroll lag
+  minimumViewTime: 200,
 };
 
 const Home = () => {
