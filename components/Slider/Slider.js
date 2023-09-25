@@ -80,6 +80,8 @@ const Slider = () => {
         snapToInterval={width}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
+        disableIntervalMomentum={true}
+        bounces={false}
         onScroll={onScroll}
       />
       <View style={style.dotContainer}>
