@@ -20,8 +20,8 @@ const VideoItem = ({
   width,
   height,
 }) => {
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [videoProgress, setVideoProgress] = useState(0);
+  const [videoLength, setVideoLength] = useState(0);
   const [isSectionShown, setIsSectionShown] = useState(false);
   const [isSeekPaused, setIsSeekPaused] = useState(false);
   const videoRef = useRef(null);
@@ -68,8 +68,8 @@ const VideoItem = ({
               Authorization: `Bearer ${token}`,
             },
           }}
-          onLoad={data => setDuration(data.duration)}
-          onProgress={data => setProgress(data.currentTime)}
+          onLoad={({duration}) => setVideoLength(duration)}
+          onProgress={({currentTime}) => setVideoProgress(currentTime)}
           resizeMode={'cover'}
           paused={paused}
           repeat={true}
@@ -91,8 +91,8 @@ const VideoItem = ({
         setShowModal={setShowModal}
       />
       <VideoItemProgressBar
-        duration={duration}
-        progress={progress}
+        length={videoLength}
+        progress={videoProgress}
         setIsPaused={setIsSeekPaused}
         setIsScrollEnabled={setIsScrollEnabled}
         videoRef={videoRef}
