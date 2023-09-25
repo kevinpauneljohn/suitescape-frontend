@@ -68,6 +68,18 @@ const Home = () => {
     },
   ]);
 
+  const renderItem = ({item}) => (
+    <VideoItem
+      item={item}
+      notInFocus={index === null || index !== item.id}
+      isClickPaused={isClickPaused}
+      setIsClickPaused={setIsClickPaused}
+      setIsScrollEnabled={setIsScrollEnabled}
+      width={width}
+      height={height - bottomTabHeight}
+    />
+  );
+
   const onRefresh = () => {
     fetchVideos(null).catch(() => {});
   };
@@ -105,17 +117,7 @@ const Home = () => {
         scrollEnabled={isScrollEnabled}
         windowSize={5}
         keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <VideoItem
-            item={item}
-            notInFocus={index === null || index !== item.id}
-            isClickPaused={isClickPaused}
-            setIsClickPaused={setIsClickPaused}
-            setIsScrollEnabled={setIsScrollEnabled}
-            width={width}
-            height={height - bottomTabHeight}
-          />
-        )}
+        renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         snapToInterval={height - bottomTabHeight}
         snapToAlignment={'center'}
