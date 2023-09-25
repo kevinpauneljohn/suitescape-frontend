@@ -22,7 +22,7 @@ const VIEWABILITY_CONFIG = {
   itemVisiblePercentThreshold: 80,
 
   // Fixes scroll lag
-  minimumViewTime: 200,
+  minimumViewTime: 280,
 };
 
 const Home = () => {
