@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Facebook from '../../assets/images/svgs/icons8-facebook.svg';
 import Google from '../../assets/images/svgs/icons8-google.svg';
 import style from './SocialButtonStyles';
+import {pressedOpacity} from '../../assets/styles/globalStyles';
 
 const SocialButton = ({type}) => {
   const SocialTypes = {
@@ -30,7 +31,7 @@ const SocialButton = ({type}) => {
         <View
           style={{
             ...style.secondaryContainer,
-            ...(pressed && {opacity: 0.5}),
+            ...pressedOpacity(pressed),
           }}>
           <View style={style.iconContainer}>
             {SocialTypes[type]?.iconComponent}

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
 import style from './LinkStyles';
+import {pressedOpacity} from '../../assets/styles/globalStyles';
 
 const Link = ({children, onPress, textStyle, type = 'button'}) =>
   type === 'button' ? (
@@ -10,7 +11,7 @@ const Link = ({children, onPress, textStyle, type = 'button'}) =>
           style={{
             ...style.link,
             ...textStyle,
-            ...(pressed && {opacity: 0.5}),
+            ...pressedOpacity(pressed),
           }}>
           {children}
         </Text>

@@ -4,18 +4,18 @@ import {Routes} from './Routes';
 import Onboarding from '../screens/Onboarding/Onboarding';
 import Login from '../screens/Login/Login';
 import SignUp from '../screens/SignUp/SignUp';
-import BottomTabs from './BottomTabs';
+import BottomTabs from './BottomTabs/BottomTabs';
 
 const Stack = createNativeStackNavigator();
 
 const MainNavigation = () => (
   <Stack.Navigator
-    initialRouteName={Routes.Onboarding}
+    initialRouteName={Routes.ONBOARDING}
     screenOptions={{headerShown: false}}>
-    <Stack.Screen name={Routes.Onboarding} component={Onboarding} />
-    <Stack.Screen name={Routes.Login} component={Login} />
-    <Stack.Screen name={Routes.SignUp} component={SignUp} />
-    <Stack.Screen name={Routes.BottomTabs} component={BottomTabs} />
+    <Stack.Screen name={Routes.ONBOARDING} component={Onboarding} />
+    <Stack.Screen name={Routes.LOGIN} component={Login} />
+    <Stack.Screen name={Routes.SIGNUP} component={SignUp} />
+    <Stack.Screen name={Routes.BOTTOM_TABS} component={BottomTabs} />
   </Stack.Navigator>
 );
 

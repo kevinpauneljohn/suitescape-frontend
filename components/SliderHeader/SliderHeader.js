@@ -10,29 +10,27 @@ import {settingsStorage} from '../../storage/settingsStorage';
 
 const SliderHeader = ({index, onPrevButtonClick, showSkipButton = false}) => {
   const navigation = useNavigation();
+
+  const handleSkipButtonClick = () => {
+    settingsStorage.setBool('skipOnboarding', true);
+    navigation.replace(Routes.SIGNUP);
+  };
+
+  const handleSignInButtonClick = () => {
+    settingsStorage.setBool('skipOnboarding', true);
+    navigation.replace(Routes.LOGIN);
+  };
+
   return (
     <View style={style.header}>
       <View style={style.headerLeft}>
         {index > 0 && <BackButton onPress={onPrevButtonClick} />}
       </View>
       <View style={style.headerRight}>
-        {index === 0 && (
-          <SkipButton
-            onPress={() => {
-              settingsStorage.setBool('skipOnboarding', true);
-              navigation.replace(Routes.SignUp);
-            }}
-          />
-        )}
+        {index === 0 && <SkipButton onPress={handleSkipButtonClick} />}
         {showSkipButton && (
           <View style={style.signInButtonContainer}>
-            <Link
-              onPress={() => {
-                settingsStorage.setBool('skipOnboarding', true);
-                navigation.replace(Routes.Login);
-              }}>
-              Sign In
-            </Link>
+            <Link onPress={handleSignInButtonClick}>Sign In</Link>
           </View>
         )}
       </View>

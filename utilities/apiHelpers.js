@@ -1,25 +1,41 @@
 import {Alert} from 'react-native';
 import {userStorage} from '../storage/userStorage';
 
-export const handleApiResponse = (response, setErrors, onSuccess) => {
-  if (response.data.errors) {
-    Alert.alert('Error', response.data.message);
-    setErrors(response.data.errors);
+export const handleApiResponse = ({response, onError, onSuccess}) => {
+  const result = response.data;
+
+  if (result.errors) {
+    Alert.alert('Error', result.message);
+    onError && onError(result);
     return;
   }
-  Alert.alert('Success', response.data.message);
-  if (response.data.token) {
-    userStorage.setString('token', response.data.token);
+
+  if (result.token) {
+    userStorage.setString('token', result.token);
   }
-  onSuccess && onSuccess();
+
+  if (result.user) {
+    console.log(result.user);
+  }
+
+  onSuccess && onSuccess(result);
+  // console.log(result);
 };
 
-export const handleApiError = (err, setErrors) => {
-  if (err.response) {
-    setErrors(err.response.data.errors);
-    console.log(err.response.data);
-  } else {
+export const handleApiError = (err, handleErrors) => {
+  const errorResponse = err.response;
+
+  if (!errorResponse) {
     Alert.alert('Error', err.message);
     console.log(err.request);
+    return;
+  }
+
+  const errors = errorResponse.data;
+  handleErrors && handleErrors(errors);
+  console.log(errors);
+
+  if (errorResponse.status === 401) {
+    Alert.alert('Not logged in', errors.message);
   }
 };
