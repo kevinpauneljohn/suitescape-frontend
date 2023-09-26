@@ -28,7 +28,7 @@ const Slider = () => {
   const handleNextButtonClick = () => {
     if (endReached) {
       settingsStorage.setBool('skipOnboarding', true);
-      navigation.replace(Routes.SignUp);
+      navigation.replace(Routes.SIGNUP);
       return;
     }
     flatListRef.current.scrollToIndex({index: index + 1, animated: true});
@@ -39,6 +39,15 @@ const Slider = () => {
       index: index - 1,
       animated: true,
     });
+  };
+
+  const onScroll = e => {
+    const offset = e.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(offset / width);
+    if (newIndex === index) {
+      return;
+    }
+    setIndex(newIndex);
   };
 
   const renderDot = i => (
@@ -71,17 +80,15 @@ const Slider = () => {
         snapToInterval={width}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
-        onScroll={e => {
-          const offset = e.nativeEvent.contentOffset.x;
-          const newIndex = Math.round(offset / width);
-          setIndex(newIndex);
-        }}
+        disableIntervalMomentum={true}
+        bounces={false}
+        onScroll={onScroll}
       />
       <View style={style.dotContainer}>
         {slides.map((_, i) => renderDot(i))}
       </View>
       <View style={style.nextButtonContainer}>
-        <Button onPress={() => handleNextButtonClick()}>
+        <Button onPress={handleNextButtonClick}>
           {endReached ? 'Get Started' : 'Next'}
         </Button>
       </View>

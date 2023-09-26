@@ -18,11 +18,11 @@ const Onboarding = ({navigation}) => {
     // _setToken('');
 
     if (token) {
-      navigation.replace(Routes.BottomTabs);
+      navigation.replace(Routes.BOTTOM_TABS);
       return;
     }
     if (skipOnboarding) {
-      navigation.replace(Routes.Login);
+      navigation.replace(Routes.LOGIN);
     }
   });
 

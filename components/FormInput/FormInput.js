@@ -62,16 +62,7 @@ const FormInput = forwardRef(
         return null;
       }
 
-      // Example error message:
-      // {
-      //   "email": [
-      //     "The email has already been taken."
-      //   ],
-      //   "password": [
-      //     "The password must be at least 8 characters.",
-      //     "The password confirmation does not match."
-      //   ]
-      // }
+      // Note: Each error message is an array
       return errorMessage.map((message, index) => (
         <HelperText key={index} type={'error'} visible={message}>
           {message}
