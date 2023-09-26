@@ -4,6 +4,7 @@ import {
   Pressable,
   RefreshControl,
   StatusBar,
+  useColorScheme,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -92,12 +93,16 @@ const Home = () => {
     setIsClickPaused(false);
   };
 
+  const colorScheme = useColorScheme();
+
   return (
     <View style={style.mainContainer}>
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle={isFocused ? 'light-content' : 'dark-content'}
+        barStyle={
+          isFocused || colorScheme === 'dark' ? 'light-content' : 'dark-content'
+        }
       />
       <HeaderIcon>
         <Pressable
