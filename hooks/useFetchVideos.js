@@ -37,6 +37,7 @@ const useFetchVideos = () => {
           let newVideos = res.data;
 
           if (cursorOverride !== undefined) {
+            setVideos([]);
             setVideos(newVideos);
             setNextCursor(res.next_cursor);
             return;

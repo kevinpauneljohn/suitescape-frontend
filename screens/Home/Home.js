@@ -4,6 +4,7 @@ import {
   Pressable,
   RefreshControl,
   StatusBar,
+  useColorScheme,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -20,6 +21,9 @@ import HeaderIcon from '../../components/HeaderIcon/HeaderIcon';
 const VIEWABILITY_CONFIG = {
   // Adjust this if onViewableItemsChanged is not working properly
   itemVisiblePercentThreshold: 80,
+
+  // Fixes scroll lag
+  minimumViewTime: 280,
 };
 
 const Home = () => {
@@ -65,6 +69,18 @@ const Home = () => {
     },
   ]);
 
+  const renderItem = ({item}) => (
+    <VideoItem
+      item={item}
+      notInFocus={index === null || index !== item.id}
+      isClickPaused={isClickPaused}
+      setIsClickPaused={setIsClickPaused}
+      setIsScrollEnabled={setIsScrollEnabled}
+      width={width}
+      height={height - bottomTabHeight}
+    />
+  );
+
   const onRefresh = () => {
     fetchVideos(null).catch(() => {});
   };
@@ -77,12 +93,16 @@ const Home = () => {
     setIsClickPaused(false);
   };
 
+  const colorScheme = useColorScheme();
+
   return (
     <View style={style.mainContainer}>
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle={isFocused ? 'light-content' : 'dark-content'}
+        barStyle={
+          isFocused || colorScheme === 'dark' ? 'light-content' : 'dark-content'
+        }
       />
       <HeaderIcon>
         <Pressable
@@ -99,19 +119,10 @@ const Home = () => {
       </HeaderIcon>
       <FlatList
         data={videos}
-        keyExtractor={item => item.id}
         scrollEnabled={isScrollEnabled}
-        renderItem={({item}) => (
-          <VideoItem
-            item={item}
-            notInFocus={index === null || index !== item.id}
-            isClickPaused={isClickPaused}
-            setIsClickPaused={setIsClickPaused}
-            setIsScrollEnabled={setIsScrollEnabled}
-            width={width}
-            height={height - bottomTabHeight}
-          />
-        )}
+        windowSize={5}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         snapToInterval={height - bottomTabHeight}
         snapToAlignment={'center'}
@@ -126,6 +137,7 @@ const Home = () => {
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}
         onMomentumScrollBegin={onMomentumScrollBegin}
+        disableIntervalMomentum={true}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
     </View>

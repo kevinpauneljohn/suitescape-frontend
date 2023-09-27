@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const serverIpAddress = '192.168.100.151';
 
-const baseURL = `http://${serverIpAddress}/suitescape-api.test/api`;
+export const baseURL = `http://${serverIpAddress}/suitescape-api.test/api`;
 
 const SuitescapeAPI = axios.create({
   baseURL,
