@@ -170,7 +170,7 @@ const SignUp = ({navigation}) => {
             onChangeText={setPassword}
             placeholder={'Password'}
             textContentType={'password'}
-            errorMessage={errors?.password}
+            errorMessage={errors?.password && null}
             returnKeyType={'next'}
             onSubmitEditing={() => {
               confirmPasswordRef.current.focus();
@@ -184,7 +184,7 @@ const SignUp = ({navigation}) => {
             onChangeText={setConfirmPassword}
             placeholder={'Confirm Password'}
             textContentType={'password'}
-            errorMessage={errors?.password && []}
+            errorMessage={errors?.password}
             onSubmitEditing={() => checked && isPasswordValid && register()}
             ref={confirmPasswordRef}
           />
