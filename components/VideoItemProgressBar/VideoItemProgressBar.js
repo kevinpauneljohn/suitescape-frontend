@@ -13,9 +13,17 @@ const VideoItemProgressBar = ({
   const [isSeeking, setIsSeeking] = useState(false);
   const timeoutRef = useRef(null);
 
-  const onSeek = () => {
-    setIsSeeking(true);
+  const onValueChange = val => {
+    videoRef.current.seek(val[0], 0);
+  };
 
+  const onSlidingStart = () => {
+    setIsSeeking(true);
+    setIsScrollEnabled(false);
+    setIsPaused(true);
+  };
+
+  const onSlidingComplete = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -23,19 +31,7 @@ const VideoItemProgressBar = ({
     timeoutRef.current = setTimeout(() => {
       setIsSeeking(false);
     }, 1500);
-  };
 
-  const onValueChange = val => {
-    onSeek();
-    videoRef.current.seek(val[0], 0);
-  };
-
-  const onSlidingStart = () => {
-    setIsScrollEnabled(false);
-    setIsPaused(true);
-  };
-
-  const onSlidingComplete = () => {
     setIsScrollEnabled(true);
     setIsPaused(false);
   };
