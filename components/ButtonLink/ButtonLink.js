@@ -1,13 +1,21 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import style from './LinkStyles';
+import style from './ButtonLinkStyles';
 import {pressedOpacity} from '../../assets/styles/globalStyles';
 
-const Link = ({children, onPress, textStyle, type = 'button'}) =>
+const ButtonLink = ({
+  children,
+  onPress,
+  textStyle,
+  containerStyle,
+  type = 'button',
+  ...textProps
+}) =>
   type === 'button' ? (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={onPress} style={containerStyle} hitSlop={10}>
       {({pressed}) => (
         <Text
+          {...textProps}
           style={{
             ...style.link,
             ...textStyle,
@@ -18,9 +26,12 @@ const Link = ({children, onPress, textStyle, type = 'button'}) =>
       )}
     </Pressable>
   ) : type === 'text' ? (
-    <Text onPress={onPress} style={{...style.link, ...textStyle}}>
+    <Text
+      {...textProps}
+      onPress={onPress}
+      style={{...style.link, ...textStyle}}>
       {children}
     </Text>
   ) : null;
 
-export default Link;
+export default ButtonLink;
