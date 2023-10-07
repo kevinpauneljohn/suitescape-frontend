@@ -1,11 +1,13 @@
 export const Routes = {
-  BOTTOM_TABS: 'BottomTabs',
-  HOME: 'Home',
   ONBOARDING: 'Onboarding',
+  BOTTOM_TABS: 'Bottom Tabs',
+  HOME: 'Home',
   LOGIN: 'Login',
-  SIGNUP: 'SignUp',
+  SIGNUP: 'Sign Up',
   MESSAGES: 'Messages',
   SEARCH: 'Search',
   BOOKINGS: 'Bookings',
   PROFILE: 'Profile',
+  LISTING_DETAILS: 'Listing Details',
+  CHECK_AVAILABILITY: 'Check Availability',
 };
