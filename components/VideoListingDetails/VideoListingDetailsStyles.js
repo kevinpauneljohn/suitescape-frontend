@@ -5,10 +5,9 @@ const style = StyleSheet.create({
     position: 'absolute',
     left: 15,
     bottom: 30,
-    maxWidth: 180,
+    maxWidth: 200,
   },
   text: {
-    fontFamily: 'Roboto',
     color: 'white',
     marginBottom: 5,
   },
@@ -16,25 +15,15 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
-  ratingText: {
-    fontSize: 12,
-    marginLeft: 5,
-  },
   locationText: {
+    marginTop: 5,
     fontSize: 10,
   },
   priceText: {
     fontSize: 16,
   },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  starRatingContainer: {
-    marginBottom: 10,
-  },
-  starRating: {
-    marginHorizontal: 1,
+  ratingText: {
+    marginBottom: 4,
   },
 });
 
