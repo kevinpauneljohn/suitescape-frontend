@@ -1,7 +1,7 @@
 import React from 'react';
 import {Checkbox} from 'react-native-paper';
 import {Text, View} from 'react-native';
-import Link from '../Link/Link';
+import ButtonLink from '../ButtonLink/ButtonLink';
 import style from './AgreementBoxStyles';
 import {Colors} from '../../assets/Colors';
 import {useTheme} from '@react-navigation/native';
@@ -22,19 +22,19 @@ const AgreementBox = ({checked, setChecked}) => {
           ...style.textContainer,
         }}>
         I have agreed to the{' '}
-        <Link
+        <ButtonLink
           type={'text'}
           onPress={() => console.log('Terms and Conditions')}
           textStyle={style.text}>
           {'Terms and Conditions'}
-        </Link>{' '}
+        </ButtonLink>{' '}
         and{' '}
-        <Link
+        <ButtonLink
           type={'text'}
           onPress={() => console.log('Privacy Policy')}
           textStyle={style.text}>
           {'Privacy Policy'}
-        </Link>{' '}
+        </ButtonLink>{' '}
         of Suitescape.
       </Text>
     </View>

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import VideoItem from '../../components/VideoItem/VideoItem';
+import VideoListing from '../../components/VideoListing/VideoListing';
 import style from './HomeStyles';
 import useFetchVideos from '../../hooks/useFetchVideos';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -23,24 +23,33 @@ const VIEWABILITY_CONFIG = {
   itemVisiblePercentThreshold: 80,
 
   // Fixes scroll lag
-  minimumViewTime: 280,
+  // minimumViewTime: 280,
 };
 
 const Home = () => {
   const {videos, isLoading, isRefreshing, fetchVideos} = useFetchVideos();
-  const {width, height} = useWindowDimensions();
+  const {height} = useWindowDimensions();
   const bottomTabHeight = useBottomTabBarHeight();
 
   const [index, setIndex] = useState(null);
   const [lastPlayedIndex, setLastPlayedIndex] = useState(null);
-  const [isClickPaused, setIsClickPaused] = useState(false);
   const [isFocused, setIsFocused] = useState(true);
   const [isScrollEnabled, setIsScrollEnabled] = useState(true);
+
+  const statusBarHeight = StatusBar.currentHeight;
+  const videoHeight = height - bottomTabHeight + statusBarHeight;
 
   useFocusEffect(
     useCallback(() => {
       setIsFocused(true);
+      return () => {
+        setIsFocused(false);
+      };
+    }, []),
+  );
 
+  useFocusEffect(
+    useCallback(() => {
       if (index === null && videos[0]) {
         setIndex(videos[0]?.id);
       } else if (lastPlayedIndex !== null) {
@@ -48,7 +57,6 @@ const Home = () => {
       }
       return () => {
         setIndex(null);
-        setIsFocused(false);
       };
     }, [lastPlayedIndex, videos]),
   );
@@ -70,14 +78,12 @@ const Home = () => {
   ]);
 
   const renderItem = ({item}) => (
-    <VideoItem
+    <VideoListing
       item={item}
-      notInFocus={index === null || index !== item.id}
-      isClickPaused={isClickPaused}
-      setIsClickPaused={setIsClickPaused}
+      height={videoHeight}
       setIsScrollEnabled={setIsScrollEnabled}
-      width={width}
-      height={height - bottomTabHeight}
+      isHomeScreenFocused={isFocused}
+      notInFocus={index === null || index !== item.id}
     />
   );
 
@@ -87,10 +93,6 @@ const Home = () => {
 
   const onEndReached = () => {
     fetchVideos().catch(() => {});
-  };
-
-  const onMomentumScrollBegin = () => {
-    setIsClickPaused(false);
   };
 
   const colorScheme = useColorScheme();
@@ -113,18 +115,19 @@ const Home = () => {
       </HeaderIcon>
       <HeaderIcon right={true}>
         <NotificationBadge
-          size={1}
+          size={0}
           onPress={() => console.log('Notifications')}
         />
       </HeaderIcon>
       <FlatList
         data={videos}
+        contentOffset={{x: 0, y: 0}}
         scrollEnabled={isScrollEnabled}
         windowSize={5}
         keyExtractor={item => item.id}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-        snapToInterval={height - bottomTabHeight}
+        snapToInterval={videoHeight}
         snapToAlignment={'center'}
         decelerationRate={'fast'}
         refreshControl={
@@ -136,7 +139,6 @@ const Home = () => {
         }
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}
-        onMomentumScrollBegin={onMomentumScrollBegin}
         disableIntervalMomentum={true}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />

@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import globalStyles from '../../assets/styles/globalStyles';
-import TextHeader from '../../components/TextHeader/TextHeader';
+import HeaderText from '../../components/HeaderText/HeaderText';
 import LogoView from '../../components/LogoView/LogoView';
 import FormInput from '../../components/FormInput/FormInput';
-import Button from '../../components/Button/Button';
+import ButtonLarge from '../../components/ButtonLarge/ButtonLarge';
 import PasswordCheckerView from '../../components/PasswordCheckerView/PasswordCheckerView';
 import AgreementBox from '../../components/AgreementBox/AgreementBox';
 import LineView from '../../components/LineView/LineView';
-import SocialButton from '../../components/SocialButton/SocialButton';
+import ButtonSocialLogin from '../../components/ButtonSocialLogin/ButtonSocialLogin';
 import AuthSwitchPrompt from '../../components/AuthSwitchPrompt/AuthSwitchPrompt';
 import {Routes} from '../../navigation/Routes';
 import SuitescapeAPI from '../../services/SuitescapeAPI';
@@ -78,10 +78,13 @@ const SignUp = ({navigation}) => {
       handleApiResponse({
         response,
         onError: e => setErrors(e.errors),
-        onSuccess: () => navigation.replace(Routes.LOGIN),
+        onSuccess: () => {
+          Alert.alert('Signup successful', 'You can now login your account.');
+          navigation.replace(Routes.LOGIN);
+        },
       });
     } catch (err) {
-      handleApiError(err, e => setErrors(e.errors));
+      handleApiError({error: err, handleErrors: e => setErrors(e.errors)});
     }
   };
 
@@ -103,7 +106,7 @@ const SignUp = ({navigation}) => {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 20 : 0}>
         <ScrollView bounces={false}>
           <LogoView />
-          <TextHeader>Create An Account</TextHeader>
+          <HeaderText>Create Account</HeaderText>
           <FormInput
             value={firstName}
             onChangeText={setFirstName}
@@ -152,10 +155,11 @@ const SignUp = ({navigation}) => {
           <FormInput
             value={email}
             onChangeText={setEmail}
-            placeholder={'Email'}
+            placeholder={'Email Address'}
             keyboardType={'email-address'}
             textContentType={'emailAddress'}
             autoCapitalize={'none'}
+            autoCorrect={false}
             errorMessage={errors?.email}
             returnKeyType={'next'}
             onSubmitEditing={() => {
@@ -196,15 +200,15 @@ const SignUp = ({navigation}) => {
           )}
           <AgreementBox checked={checked} setChecked={setChecked} />
           <View style={globalStyles.registrationButtonContainer}>
-            <Button
+            <ButtonLarge
               disabled={!checked || !isPasswordValid}
               onPress={() => register()}>
               Sign Up
-            </Button>
+            </ButtonLarge>
           </View>
           <LineView>Or</LineView>
-          <SocialButton type={'facebook'} />
-          <SocialButton type={'google'} />
+          <ButtonSocialLogin type={'facebook'} />
+          <ButtonSocialLogin type={'google'} />
           <AuthSwitchPrompt />
         </ScrollView>
       </KeyboardAvoidingView>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Link from '../Link/Link';
+import ButtonLink from '../ButtonLink/ButtonLink';
 import {Routes} from '../../navigation/Routes';
 import style from './AuthSwitchPromptStyles';
 import {settingsStorage} from '../../storage/settingsStorage';
@@ -29,9 +29,9 @@ const AuthSwitchPrompt = ({register = false, onboarding = false}) => {
         }}>
         {register ? "Don't have an account?" : 'Already have an account?'}
       </Text>
-      <Link onPress={handleNextScreen} textStyle={style.text}>
+      <ButtonLink onPress={handleNextScreen} textStyle={style.text}>
         {register ? 'Create Account' : 'Sign In'}
-      </Link>
+      </ButtonLink>
     </View>
   );
 };

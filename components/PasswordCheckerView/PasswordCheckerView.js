@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 import {View} from 'react-native';
 import style from './PasswordCheckerStyles';
-import CriteriaRow from '../CriteriaRow/CriteriaRow';
+import PasswordCriteriaRow from '../PasswordCriteriaRow/PasswordCriteriaRow';
 
 const REQUIRED_SIZE = 5;
 
@@ -26,23 +26,23 @@ const PasswordCheckerView = ({password, setIsPasswordValid}) => {
 
   return (
     <View style={style.mainContainer}>
-      <CriteriaRow
+      <PasswordCriteriaRow
         met={criteria.hasMinimumLength}
         text="Minimum of 8 characters"
       />
-      <CriteriaRow
+      <PasswordCriteriaRow
         met={criteria.hasCapitalLetter}
         text="Must have at least 1 capital letter"
       />
-      <CriteriaRow
+      <PasswordCriteriaRow
         met={criteria.hasLowerCaseLetter}
         text="Must have at least 1 lowercase letter"
       />
-      <CriteriaRow
+      <PasswordCriteriaRow
         met={criteria.hasNumber}
         text="Must have at least 1 number"
       />
-      <CriteriaRow
+      <PasswordCriteriaRow
         met={criteria.hasSpecialCharacter}
         text="Must have at least 1 special character"
       />

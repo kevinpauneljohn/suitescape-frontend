@@ -3,13 +3,13 @@ import {SafeAreaView, ScrollView, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import style from './LoginStyles';
 import globalStyles from '../../assets/styles/globalStyles';
-import TextHeader from '../../components/TextHeader/TextHeader';
+import HeaderText from '../../components/HeaderText/HeaderText';
 import LogoView from '../../components/LogoView/LogoView';
 import FormInput from '../../components/FormInput/FormInput';
-import Link from '../../components/Link/Link';
-import Button from '../../components/Button/Button';
+import ButtonLink from '../../components/ButtonLink/ButtonLink';
+import ButtonLarge from '../../components/ButtonLarge/ButtonLarge';
 import LineView from '../../components/LineView/LineView';
-import SocialButton from '../../components/SocialButton/SocialButton';
+import ButtonSocialLogin from '../../components/ButtonSocialLogin/ButtonSocialLogin';
 import AuthSwitchPrompt from '../../components/AuthSwitchPrompt/AuthSwitchPrompt';
 import {Routes} from '../../navigation/Routes';
 import SuitescapeAPI from '../../services/SuitescapeAPI';
@@ -48,7 +48,7 @@ const Login = ({navigation}) => {
         onSuccess: () => navigation.replace(Routes.BOTTOM_TABS),
       });
     } catch (err) {
-      handleApiError(err, e => setErrors(e.errors));
+      handleApiError({error: err, handleErrors: e => setErrors(e.errors)});
     }
   };
 
@@ -56,13 +56,14 @@ const Login = ({navigation}) => {
     <SafeAreaView>
       <ScrollView bounces={false}>
         <LogoView />
-        <TextHeader>Log in to your Account</TextHeader>
+        <HeaderText>Log in to your Account</HeaderText>
         <FormInput
           value={email}
           onChangeText={setEmail}
-          placeholder={'Email'}
+          placeholder={'Email Address'}
           keyboardType={'email-address'}
           textContentType={'emailAddress'}
+          autoComplete={'email'}
           autoCapitalize={'none'}
           errorMessage={errors?.email}
           returnKeyType={'next'}
@@ -82,19 +83,19 @@ const Login = ({navigation}) => {
           ref={passwordRef}
         />
         <View style={style.forgotPasswordButtonContainer}>
-          <Link
+          <ButtonLink
             onPress={() => console.log('Forgot Password')}
             textStyle={style.forgotPasswordText}>
             Forgot Password?
-          </Link>
+          </ButtonLink>
         </View>
         <View style={globalStyles.registrationButtonContainer}>
-          <Button onPress={() => login()}>Login</Button>
+          <ButtonLarge onPress={() => login()}>Login</ButtonLarge>
         </View>
         <LineView>Or</LineView>
-        <SocialButton type={'phone'} />
-        <SocialButton type={'facebook'} />
-        <SocialButton type={'google'} />
+        <ButtonSocialLogin type={'phone'} />
+        <ButtonSocialLogin type={'facebook'} />
+        <ButtonSocialLogin type={'google'} />
         <AuthSwitchPrompt register={true} />
       </ScrollView>
     </SafeAreaView>
