@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import SuitescapeAPI from '../services/SuitescapeAPI';
 import {handleApiError, handleApiResponse} from '../utilities/apiHelpers';
-import {Alert} from 'react-native';
 import {userStorage} from '../storage/userStorage';
 
 const useFetchVideos = () => {
@@ -33,13 +32,13 @@ const useFetchVideos = () => {
       );
       handleApiResponse({
         response,
-        onSuccess: res => {
+        onSuccess: ({next_cursor: newCursor, ...res}) => {
           let newVideos = res.data;
 
           if (cursorOverride !== undefined) {
             setVideos([]);
             setVideos(newVideos);
-            setNextCursor(res.next_cursor);
+            setNextCursor(newCursor);
             return;
           }
 
@@ -53,11 +52,11 @@ const useFetchVideos = () => {
             return;
           }
           setVideos(prevVideos => [...prevVideos, ...newVideos]);
-          setNextCursor(res.next_cursor);
+          setNextCursor(newCursor);
         },
       });
     } catch (err) {
-      handleApiError(err, e => Alert.alert('Error', e.message));
+      handleApiError({error: err, defaultAlert: true});
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
