@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
-  pauseContainer: {
+  popUpContainer: {
     position: 'absolute',
     top: 0,
     bottom: 0,
@@ -11,8 +11,8 @@ const style = StyleSheet.create({
     alignItems: 'center',
     zIndex: 1,
   },
-  pauseButton: {
-    opacity: 0.6,
+  popUpOpacity: {
+    opacity: 0.8,
   },
 });
 

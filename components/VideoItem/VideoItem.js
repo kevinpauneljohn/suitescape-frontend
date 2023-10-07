@@ -1,126 +1,106 @@
-import React, {memo, useEffect, useRef, useState} from 'react';
-import {Pressable, View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Video from 'react-native-video';
+import React, {forwardRef, memo, useState} from 'react';
+import {ActivityIndicator, Pressable, View} from 'react-native';
 import style from './VideoItemStyles';
-import {userStorage} from '../../storage/userStorage';
-import useAppState from '../../hooks/useAppState';
-import useListing from '../../hooks/useListing';
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import Video from 'react-native-video';
 import {baseURL} from '../../services/SuitescapeAPI';
-import VideoItemDetails from '../VideoItemDetails/VideoItemDetails';
-import VideoItemIconView from '../VideoItemIconView/VideoItemIconView';
-import VideoItemProgressBar from '../VideoItemProgressBar/VideoItemProgressBar';
+import {userStorage} from '../../storage/userStorage';
 
-const VideoItem = ({
-  item,
-  notInFocus,
-  isClickPaused,
-  setIsClickPaused,
-  setIsScrollEnabled,
-  width,
-  height,
-}) => {
-  const [videoProgress, setVideoProgress] = useState(0);
-  const [videoLength, setVideoLength] = useState(0);
-  const [isSectionShown, setIsSectionShown] = useState(false);
-  const [isSeekPaused, setIsSeekPaused] = useState(false);
-  const videoRef = useRef(null);
+const VideoItem = forwardRef(
+  (
+    {
+      listingId,
+      videoId,
+      width,
+      height,
+      onLoad,
+      onProgress,
+      popUpIconSize = 55,
+      overridePause = false,
+      isInitialPaused = false,
+      isInitialMuted = false,
+    },
+    ref,
+  ) => {
+    const [isVideoPaused, setIsVideoPaused] = useState(isInitialPaused);
+    const [isVideoMuted, setIsVideoMuted] = useState(isInitialMuted);
+    const [isVideoBuffering, setIsVideoBuffering] = useState(false);
 
-  const listing = useListing(item);
-  const appState = useAppState();
+    const paused = overridePause || isVideoPaused;
+    const token = userStorage.getString('token');
 
-  const token = userStorage.getString('token');
-  const inBackground = !!appState.match(/inactive|background/);
-  const paused = isSeekPaused || isClickPaused || inBackground || notInFocus;
+    const togglePauseOrUnmute = () => {
+      if (isVideoBuffering) {
+        return;
+      }
+      if (isVideoMuted) {
+        setIsVideoMuted(false);
+        return;
+      }
+      setIsVideoPaused(prevState => !prevState);
+    };
 
-  useEffect(() => {
-    if (!isClickPaused && notInFocus) {
-      videoRef.current.seek(0);
-    }
-  }, [isClickPaused, notInFocus]);
+    const handleOnBuffer = ({isBuffering}) => {
+      setIsVideoBuffering(isBuffering);
+    };
 
-  const togglePause = () => {
-    setIsClickPaused(prevState => !prevState);
-  };
+    const handleOnSeek = ({seekTime}) => {
+      seekTime === 0 && setIsVideoPaused(false);
+    };
 
-  const setShowModal = () => {
-    setIsSectionShown(true);
-  };
-
-  return (
-    <View>
-      <Pressable onPress={togglePause}>
-        {isClickPaused && (
-          <View style={style.pauseContainer}>
+    return (
+      <Pressable onPress={togglePauseOrUnmute}>
+        {isVideoMuted && !isVideoBuffering && (
+          <View style={style.popUpContainer}>
+            <Icon
+              name="volume-xmark"
+              size={popUpIconSize}
+              color="white"
+              style={style.popUpOpacity}
+            />
+          </View>
+        )}
+        {isVideoPaused && (
+          <View style={style.popUpContainer}>
             <Icon
               name="play"
-              size={50}
+              size={popUpIconSize}
               color="white"
-              style={style.pauseButton}
+              style={style.popUpOpacity}
+            />
+          </View>
+        )}
+        {isVideoBuffering && (
+          <View style={style.popUpContainer}>
+            <ActivityIndicator
+              size={popUpIconSize}
+              color={'white'}
+              style={style.popUpOpacity}
             />
           </View>
         )}
         <Video
-          ref={videoRef}
+          ref={ref}
           source={{
-            uri: `${baseURL}/videos/${item.id}`,
+            uri: `${baseURL}/listings/${listingId}/videos/${videoId}`,
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }}
-          onLoad={({duration}) => setVideoLength(duration)}
-          onProgress={({currentTime}) => setVideoProgress(currentTime)}
-          resizeMode={'cover'}
+          onBuffer={handleOnBuffer}
+          onSeek={handleOnSeek}
+          onLoad={onLoad}
+          onProgress={onProgress}
           paused={paused}
+          muted={isVideoMuted}
           repeat={true}
+          resizeMode={'cover'}
           style={{width, height}}
           onError={e => console.error(e)}
         />
       </Pressable>
-      <VideoItemDetails
-        name={listing.name}
-        rating={listing.avgRating}
-        location={listing.location}
-        price={listing.price}
-      />
-      <VideoItemIconView
-        id={item.id}
-        likes={listing.likes}
-        isVideoLiked={listing.isLiked}
-        isVideoSaved={listing.isSaved}
-        setShowModal={setShowModal}
-      />
-      <VideoItemProgressBar
-        length={videoLength}
-        progress={videoProgress}
-        setIsPaused={setIsSeekPaused}
-        setIsScrollEnabled={setIsScrollEnabled}
-        videoRef={videoRef}
-      />
-
-      {/*<Portal>*/}
-      {/*  <Modal*/}
-      {/*    visible={showModal}*/}
-      {/*    onDismiss={() => setShowModal(false)}*/}
-      {/*    contentContainerStyle={{*/}
-      {/*      backgroundColor: 'white',*/}
-      {/*      position: 'absolute',*/}
-      {/*      bottom: 60,*/}
-      {/*      left: 0,*/}
-      {/*      right: 0,*/}
-      {/*    }}>*/}
-      {/*    <ScrollView*/}
-      {/*      horizontal={true}*/}
-      {/*      contentContainerStyle={{*/}
-      {/*        height: 150,*/}
-      {/*        alignItems: 'center',*/}
-      {/*        marginHorizontal: 20,*/}
-      {/*      }}*/}
-      {/*    />*/}
-      {/*  </Modal>*/}
-      {/*</Portal>*/}
-    </View>
-  );
-};
+    );
+  },
+);
 
 export default memo(VideoItem);
