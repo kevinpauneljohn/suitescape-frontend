@@ -1,12 +1,11 @@
 import React, {memo} from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable} from 'react-native';
 import {pressedOpacity} from '../../assets/styles/globalStyles';
-import style from './VideoItemIconStyles';
+import style from './VideoListingIconStyles';
 
-const VideoItemIcon = ({
+const VideoListingIcon = ({
   IconComponent,
   onPress,
-  label,
   name,
   color = 'white',
   size = 30,
@@ -19,9 +18,8 @@ const VideoItemIcon = ({
         ...pressedOpacity(pressed, 0.8),
       })}>
       <IconComponent name={name} color={color} size={size} />
-      <Text style={style.text}>{label}</Text>
     </Pressable>
   );
 };
 
-export default memo(VideoItemIcon);
+export default memo(VideoListingIcon);

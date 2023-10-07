@@ -5,8 +5,14 @@ const style = StyleSheet.create({
     position: 'absolute',
     width: 50,
     right: 6,
-    bottom: 30,
+    bottom: 50,
     alignItems: 'center',
+  },
+  text: {
+    color: 'white',
+    fontSize: 10,
+    marginTop: 3,
+    textAlign: 'center',
   },
 });
 

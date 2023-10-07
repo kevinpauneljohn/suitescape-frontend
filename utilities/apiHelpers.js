@@ -22,20 +22,21 @@ export const handleApiResponse = ({response, onError, onSuccess}) => {
   // console.log(result);
 };
 
-export const handleApiError = (err, handleErrors) => {
-  const errorResponse = err.response;
+export const handleApiError = ({error, handleErrors, defaultAlert = false}) => {
+  const errorResponse = error.response;
 
   if (!errorResponse) {
-    Alert.alert('Error', err.message);
-    console.log(err.request);
+    Alert.alert('Error', error.message);
+    console.log(error.request);
     return;
   }
 
-  const errors = errorResponse.data;
-  handleErrors && handleErrors(errors);
-  console.log(errors);
+  const responseErrors = errorResponse.data;
 
-  if (errorResponse.status === 401) {
-    Alert.alert('Not logged in', errors.message);
+  if (defaultAlert) {
+    Alert.alert('Error', responseErrors.message);
   }
+
+  handleErrors && handleErrors(responseErrors);
+  console.log(responseErrors);
 };

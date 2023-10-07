@@ -1,31 +1,31 @@
 import React, {memo, useState} from 'react';
-import {View} from 'react-native';
+import {Alert, Pressable, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import style from './VideoItemIconViewStyles';
-import VideoItemIcon from '../VideoItemIcon/VideoItemIcon';
+import style from './VideoListingIconsViewStyles';
+import VideoListingIcon from '../VideoListingIcon/VideoListingIcon';
 import SuitescapeAPI from '../../services/SuitescapeAPI';
 import {userStorage} from '../../storage/userStorage';
 import {handleApiError, handleApiResponse} from '../../utilities/apiHelpers';
+import {useNavigation} from '@react-navigation/native';
+import {Routes} from '../../navigation/Routes';
+import AvatarSample from '../AvatarSample/AvatarSample';
+import {pressedOpacity} from '../../assets/styles/globalStyles';
 
-const VideoItemIconView = ({
-  id,
-  likes,
-  isVideoLiked,
-  isVideoSaved,
-  setShowModal,
-}) => {
-  const [videoLikes, setVideoLikes] = useState(likes);
-  const [isLiked, setIsLiked] = useState(isVideoLiked);
-  const [isSaved, setIsSaved] = useState(isVideoSaved);
+const VideoListingIconsView = ({listing, setShowModal}) => {
+  const [isLiked, setIsLiked] = useState(listing.isLiked);
+  const [isSaved, setIsSaved] = useState(listing.isSaved);
+  const [videoLikes, setVideoLikes] = useState(listing.likes);
+
+  const navigation = useNavigation();
 
   const token = userStorage.getString('token');
 
   const handleLike = () => {
     SuitescapeAPI.post(
-      `/videos/${id}/like`,
+      `/listings/${listing.id}/like`,
       {},
       {
         headers: {
@@ -42,12 +42,12 @@ const VideoItemIconView = ({
           },
         }),
       )
-      .catch(err => handleApiError(err));
+      .catch(err => handleApiError({error: err, defaultAlert: true}));
   };
 
   const handleSave = () => {
     SuitescapeAPI.post(
-      `/videos/${id}/save`,
+      `/listings/${listing.id}/save`,
       {},
       {
         headers: {
@@ -63,7 +63,12 @@ const VideoItemIconView = ({
           },
         }),
       )
-      .catch(err => handleApiError(err));
+      .catch(err =>
+        handleApiError({
+          error: err,
+          handleErrors: errors => Alert.alert(errors.message),
+        }),
+      );
   };
 
   const iconsConfig = [
@@ -75,21 +80,15 @@ const VideoItemIconView = ({
       onPress: handleLike,
     },
     {
-      IconComponent: AntDesign,
-      name: 'wechat',
-      label: 'Chat',
-      onPress: () => console.log('Chat'),
-    },
-    {
       IconComponent: Foundation,
       name: 'info',
       label: 'View',
-      onPress: () => console.log('View'),
+      onPress: () => navigation.navigate(Routes.LISTING_DETAILS, {listing}),
     },
     {
       IconComponent: Icon,
       name: 'bookmark',
-      label: 'Save',
+      label: isSaved ? 'Added to Saves' : 'Save',
       color: isSaved ? 'gold' : 'white',
       onPress: handleSave,
     },
@@ -103,13 +102,22 @@ const VideoItemIconView = ({
 
   return (
     <View style={style.mainContainer}>
+      <Pressable style={({pressed}) => pressedOpacity(pressed, 0.8)}>
+        <AvatarSample fill={'rgba(0,0,0,0.5)'} size={35}>
+          Profile
+        </AvatarSample>
+        <Text style={style.text}>Profile</Text>
+      </Pressable>
       <>
         {iconsConfig.map((config, index) => (
-          <VideoItemIcon key={index} {...config} />
+          <View key={index}>
+            <VideoListingIcon {...config} />
+            <Text style={style.text}>{config.label}</Text>
+          </View>
         ))}
       </>
     </View>
   );
 };
 
-export default memo(VideoItemIconView);
+export default memo(VideoListingIconsView);
