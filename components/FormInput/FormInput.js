@@ -78,7 +78,7 @@ const FormInput = forwardRef(
             ...(errorMessage && {marginBottom: 4}),
           }}>
           <TextInput
-            {...props}
+            ref={ref}
             theme={inputTheme}
             mode={'outlined'}
             value={value}
@@ -87,7 +87,6 @@ const FormInput = forwardRef(
             secureTextEntry={type === 'password' && !showPassword}
             outlineColor={errorMessage ? 'red' : null}
             textColor={colors.text}
-            ref={ref}
             right={
               type !== 'text' && (
                 <TextInput.Icon
@@ -104,6 +103,7 @@ const FormInput = forwardRef(
                 />
               )
             }
+            {...props}
           />
           {renderErrorMessages()}
         </View>
