@@ -14,12 +14,15 @@ const VideoItemProgressBar = ({
   const timeoutRef = useRef(null);
 
   const onValueChange = val => {
+    if (!isSeeking) {
+      setIsSeeking(true);
+    }
     videoRef.current.seek(val[0], 0);
   };
 
   const onSlidingStart = () => {
+    setIsScrollEnabled && setIsScrollEnabled(false);
     setIsSeeking(true);
-    setIsScrollEnabled(false);
     setIsPaused(true);
   };
 
@@ -32,7 +35,7 @@ const VideoItemProgressBar = ({
       setIsSeeking(false);
     }, 1500);
 
-    setIsScrollEnabled(true);
+    setIsScrollEnabled && setIsScrollEnabled(true);
     setIsPaused(false);
   };
 
@@ -46,12 +49,19 @@ const VideoItemProgressBar = ({
         maximumValue={length}
         minimumTrackTintColor={undefined}
         maximumTrackTintColor={'white'}
-        trackStyle={style.track}
+        trackStyle={isSeeking ? style.largeTrack : style.smallTrack}
         thumbStyle={isSeeking ? style.thumb : style.noThumb}
         containerStyle={style.sliderContainer}
         trackMarks={[length]}
         renderTrackMarkComponent={() => {
-          return <View style={style.trackMark} />;
+          return (
+            <View
+              style={{
+                ...style.trackMark,
+                ...(!isSeeking && style.smallTrackMark),
+              }}
+            />
+          );
         }}
       />
     </View>

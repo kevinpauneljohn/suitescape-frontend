@@ -12,8 +12,11 @@ const style = StyleSheet.create({
   sliderContainer: {
     height: 25,
   },
-  track: {
+  largeTrack: {
     height: 6,
+  },
+  smallTrack: {
+    height: 3,
   },
   thumb: {
     height: 15,
@@ -24,12 +27,12 @@ const style = StyleSheet.create({
     width: 0,
   },
   trackMark: {
-    width: 5,
+    width: 3,
     height: 6,
     backgroundColor: 'white',
-    borderRadius: 1,
-    marginLeft: 1,
-    marginRight: 1,
+  },
+  smallTrackMark: {
+    height: 3,
   },
 });
 
