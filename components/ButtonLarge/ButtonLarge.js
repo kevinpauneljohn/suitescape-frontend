@@ -1,23 +1,30 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
-import style from './ButtonStyles';
+import style from './ButtonLargeStyles';
 import {
   disabledOpacity,
   pressedOpacity,
 } from '../../assets/styles/globalStyles';
 
-const Button = ({children, onPress, disabled, ...props}) => (
+const ButtonLarge = ({children, onPress, disabled, half = false, ...props}) => (
   <Pressable
-    {...props}
     onPress={onPress}
     disabled={disabled}
+    {...props}
     style={({pressed}) => ({
       ...style.button,
+      ...(half && style.halfButton),
       ...pressedOpacity(pressed, 0.7),
       ...disabledOpacity(disabled),
     })}>
-    <Text style={style.buttonText}>{children}</Text>
+    <Text
+      style={{
+        ...style.text,
+        ...(half && style.halfButtonText),
+      }}>
+      {children}
+    </Text>
   </Pressable>
 );
 
-export default Button;
+export default ButtonLarge;
