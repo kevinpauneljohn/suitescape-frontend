@@ -5,9 +5,24 @@ import {useUser} from '../../storage/userStorage';
 import {handleApiError, handleApiResponse} from '../../utilities/apiHelpers';
 import {Routes} from '../../navigation/Routes';
 import {settingsStorage} from '../../storage/settingsStorage';
+import {Alert} from 'react-native';
 
 const Profile = ({navigation}) => {
   const [token, setToken] = useUser('token', '');
+
+  const promptLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to log out?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Confirm',
+        onPress: () => logout(),
+        style: 'destructive',
+      },
+    ]);
+  };
 
   const handleLogout = () => {
     setToken('');
@@ -28,21 +43,26 @@ const Profile = ({navigation}) => {
       );
       handleApiResponse({
         response,
-        onError: () => {
+        onError: err => {
+          Alert.alert('Error', err.message);
+          console.log(err);
           handleLogout();
         },
         onSuccess: () => {
+          Alert.alert('Logout successful', 'You are now logged out.');
           handleLogout();
         },
       });
     } catch (err) {
-      handleApiError(err, () => {
-        handleLogout();
+      handleApiError({
+        error: err,
+        defaultAlert: true,
+        handleErrors: () => handleLogout(),
       });
     }
   };
 
-  return <Button onPress={() => logout()}>Logout</Button>;
+  return <Button onPress={() => promptLogout()}>Logout</Button>;
 };
 
 export default Profile;
