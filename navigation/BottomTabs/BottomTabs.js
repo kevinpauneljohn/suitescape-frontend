@@ -9,12 +9,13 @@ import Search from '../../screens/Search/Search';
 import Bookings from '../../screens/Bookings/Bookings';
 import Profile from '../../screens/Profile/Profile';
 import style from './BottomTabsStyles';
+import AvatarSample from '../../components/AvatarSample/AvatarSample';
 
 const Tabs = createBottomTabNavigator();
 
 const tabBarStyle = {
   backgroundColor: 'white',
-  minHeight: 60,
+  minHeight: 65,
   borderTopWidth: 0,
 };
 
@@ -37,8 +38,13 @@ const darkThemeTabOptions = {
 };
 
 const renderTabIcons = (route, {focused, color, size}) => {
-  let iconName;
+  let iconName = '';
   switch (route.name) {
+    case Routes.PROFILE:
+      break;
+    case Routes.HOME:
+      iconName = 'home';
+      break;
     case Routes.MESSAGES:
       iconName = 'message';
       break;
@@ -48,21 +54,23 @@ const renderTabIcons = (route, {focused, color, size}) => {
     case Routes.BOOKINGS:
       iconName = 'calendar';
       break;
-    case Routes.PROFILE:
-      iconName = 'circle';
-      break;
     default:
       iconName = 'home';
   }
   return (
-    <View>
+    <>
       <View
         style={{
           ...style.iconContainer,
           ...{marginBottom: focused ? 5 : 9},
         }}>
-        <Icon name={iconName} color={color} size={size} />
+        {route.name === Routes.PROFILE ? (
+          <AvatarSample fill={'white'} size={size} />
+        ) : (
+          <Icon name={iconName} color={color} size={size} />
+        )}
       </View>
+
       {focused && (
         <View
           style={{
@@ -71,7 +79,7 @@ const renderTabIcons = (route, {focused, color, size}) => {
           }}
         />
       )}
-    </View>
+    </>
   );
 };
 
